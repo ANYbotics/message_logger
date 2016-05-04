@@ -26,3 +26,9 @@ source /opt/ros/indigo/setup.bash
 ## Building
 
 This library can be built with catkin.
+
+
+## Usage
+
+This library defines macros to wrap to ROS logger macros or to std::cout calls. Five levels are defined: debug, info, warning, error, fatal. Calling the fatal variants throws an exception and terminates the program (if not captured).
+

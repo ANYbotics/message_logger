@@ -52,13 +52,6 @@ namespace log {
 #define MELO_LOG(level, ...) \
 { \
   switch (level) { \
-    case message_logger::log::levels::Error: \
-    { \
-      std::stringstream melo_assert_stringstream; \
-      melo_assert_stringstream << message_logger::log::colorError << message_logger::common::internal::melo_string_format(__VA_ARGS__) << message_logger::log::getResetColor(); \
-      message_logger::common::internal::melo_throw_exception<message_logger::log::melo_error>("[CTRL ERROR] ", __FUNCTION__,__FILE__,__LINE__, melo_assert_stringstream.str()); \
-    } \
-    break; \
   case message_logger::log::levels::Fatal: \
     { \
       std::stringstream melo_assert_stringstream; \
@@ -80,13 +73,6 @@ namespace log {
 #define MELO_LOG_STREAM(level, message) \
     { \
       switch (level) { \
-      case message_logger::log::levels::Error: \
-        { \
-          std::stringstream melo_assert_stringstream;             \
-          melo_assert_stringstream << message_logger::log::colorError << message << message_logger::log::getResetColor(); \
-          message_logger::common::internal::melo_throw_exception<message_logger::log::melo_error>("[CTRL ERROR] ", __FUNCTION__,__FILE__,__LINE__, melo_assert_stringstream.str()); \
-        } \
-        break; \
       case message_logger::log::levels::Fatal: \
         { \
           std::stringstream melo_assert_stringstream;             \

@@ -123,7 +123,6 @@ inline const std::string getLogLevel(const message_logger::log::levels::Level& l
 }
 
 MELO_DEFINE_EXCEPTION(melo_fatal, std::runtime_error)
-MELO_DEFINE_EXCEPTION(melo_error, std::runtime_error)
 
 
 } // namespace log

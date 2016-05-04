@@ -72,9 +72,6 @@ namespace log {
   case message_logger::log::levels::Error: \
     { \
       ROS_ERROR(__VA_ARGS__); \
-      std::stringstream melo_assert_stringstream; \
-      melo_assert_stringstream << message_logger::log::colorError << message_logger::common::internal::melo_string_format(__VA_ARGS__) << message_logger::log::getResetColor(); \
-      message_logger::common::internal::melo_throw_exception<message_logger::log::melo_error>("[CTRL ERROR] ", __FUNCTION__,__FILE__,__LINE__, melo_assert_stringstream.str()); \
     } \
     break; \
   case message_logger::log::levels::Fatal: \
@@ -115,9 +112,6 @@ namespace log {
   case message_logger::log::levels::Error: \
     { \
     ROS_ERROR_STREAM(message); \
-    std::stringstream melo_assert_stringstream;             \
-    melo_assert_stringstream << message_logger::log::colorError << message << message_logger::log::getResetColor(); \
-    message_logger::common::internal::melo_throw_exception<message_logger::log::melo_error>("[CTRL ERROR] ", __FUNCTION__,__FILE__,__LINE__, melo_assert_stringstream.str()); \
     } \
     break; \
   case message_logger::log::levels::Fatal: \
@@ -158,9 +152,6 @@ namespace log {
   case message_logger::log::levels::Error: \
     { \
     ROS_ERROR(__VA_ARGS__); \
-    std::stringstream melo_assert_stringstream; \
-    melo_assert_stringstream << message_logger::log::colorError << message_logger::common::internal::melo_string_format(__VA_ARGS__) << message_logger::log::getResetColor(); \
-    message_logger::common::internal::melo_throw_exception<message_logger::log::melo_error>("[CTRL ERROR] ", __FUNCTION__,__FILE__,__LINE__, melo_assert_stringstream.str()); \
     } \
     break; \
   case message_logger::log::levels::Fatal: \
@@ -201,9 +192,6 @@ namespace log {
       case message_logger::log::levels::Error: \
         { \
         ROS_ERROR_STREAM(message); \
-        std::stringstream melo_assert_stringstream;             \
-        melo_assert_stringstream << message_logger::log::colorError << message << message_logger::log::getResetColor(); \
-        message_logger::common::internal::melo_throw_exception<message_logger::log::melo_error>("[CTRL ERROR] ", __FUNCTION__,__FILE__,__LINE__, melo_assert_stringstream.str()); \
         } \
         break; \
       case message_logger::log::levels::Fatal: \
@@ -244,9 +232,6 @@ namespace log {
       case message_logger::log::levels::Error: \
         { \
           ROS_ERROR_THROTTLE(rate, __VA_ARGS__); \
-          std::stringstream melo_assert_stringstream; \
-          melo_assert_stringstream << message_logger::log::colorError << message_logger::common::internal::melo_string_format(__VA_ARGS__) << message_logger::log::getResetColor(); \
-          message_logger::common::internal::melo_throw_exception<message_logger::log::melo_error>("[CTRL ERROR] ", __FUNCTION__,__FILE__,__LINE__, melo_assert_stringstream.str()); \
         } \
         break; \
       case message_logger::log::levels::Fatal: \
@@ -287,9 +272,6 @@ namespace log {
       case message_logger::log::levels::Error: \
         { \
         ROS_ERROR_STREAM_THROTTLE(rate, message); \
-        std::stringstream melo_assert_stringstream;             \
-        melo_assert_stringstream << message_logger::log::colorError << message << message_logger::log::getResetColor(); \
-        message_logger::common::internal::melo_throw_exception<message_logger::log::melo_error>("[CTRL ERROR] ", __FUNCTION__,__FILE__,__LINE__, melo_assert_stringstream.str()); \
         } \
         break; \
       case message_logger::log::levels::Fatal: \
