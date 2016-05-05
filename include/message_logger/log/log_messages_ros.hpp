@@ -40,12 +40,9 @@
 */
 #pragma once
 
+#include <ros/console.h>
 
 #include "message_logger/log/log_messages_backend.hpp"
-
-#ifdef USE_ROS
-#include <ros/console.h>
-#endif
 
 namespace message_logger {
 namespace log {

@@ -41,10 +41,10 @@
 #pragma once
 
 #include "message_logger/common/assert_macros.hpp"
-#ifdef USE_ROS
-#include "message_logger/log/log_messages_ros.hpp"
-#else
+#ifdef USE_COUT
 #include "message_logger/log/log_messages_std.hpp"
+#else
+#include "message_logger/log/log_messages_ros.hpp"
 #endif
 
 namespace message_logger {
