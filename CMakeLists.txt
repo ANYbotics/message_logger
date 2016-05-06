@@ -5,7 +5,7 @@ project(message_logger)
 # Find Catkin
 find_package(catkin REQUIRED)
 
-if(DEFINED ENV{ROS_DISTRO})
+if(DEFINED ENV{ROS_DISTRO} AND NOT DEFINED USE_COUT)
   message(STATUS "Building message_logger using ros.")
   catkin_package(
     INCLUDE_DIRS include
