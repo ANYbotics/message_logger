@@ -5,20 +5,21 @@ project(message_logger)
 # Find Catkin
 find_package(catkin REQUIRED)
 
-if(DEFINED ENV{ROS_DISTRO})
-    message(STATUS "Building for ros.")
-    catkin_package(
-     INCLUDE_DIRS include
-     CATKIN_DEPENDS roscpp
-     CFG_EXTRAS message_logger.cmake 
-    )
-    add_definitions(-DUSE_ROS)
+if(DEFINED ENV{ROS_DISTRO} AND NOT DEFINED USE_COUT)
+  message(STATUS "Building message_logger using ros.")
+  catkin_package(
+    INCLUDE_DIRS include
+    CATKIN_DEPENDS roscpp
+    CFG_EXTRAS message_logger.cmake 
+  )
 else()
-    catkin_package(
-     INCLUDE_DIRS include
-     CATKIN_DEPENDS 
-     CFG_EXTRAS message_logger.cmake 
-    )
+  message(STATUS "Building message_logger using std::cout.")
+  catkin_package(
+    INCLUDE_DIRS include
+    CATKIN_DEPENDS 
+    CFG_EXTRAS message_logger.cmake 
+  )
+  add_definitions(-DUSE_COUT)
 endif()
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
@@ -30,8 +31,8 @@ include_directories(
 )
 
 add_library(${PROJECT_NAME} SHARED 
-    src/time/Time.cpp  
-    src/time/TimeStd.cpp  
+  src/time/Time.cpp  
+  src/time/TimeStd.cpp  
 )
 
 target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES})
