@@ -9,6 +9,7 @@ if(DEFINED ENV{ROS_DISTRO} AND NOT DEFINED USE_COUT)
   message(STATUS "Building message_logger using ros.")
   catkin_package(
     INCLUDE_DIRS include
+    LIBRARIES ${PROJECT_NAME}
     CATKIN_DEPENDS roscpp
     CFG_EXTRAS message_logger.cmake 
   )
@@ -16,6 +17,7 @@ else()
   message(STATUS "Building message_logger using std::cout.")
   catkin_package(
     INCLUDE_DIRS include
+    LIBRARIES ${PROJECT_NAME}
     CATKIN_DEPENDS 
     CFG_EXTRAS message_logger.cmake 
   )
