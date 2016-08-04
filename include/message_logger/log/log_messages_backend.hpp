@@ -76,11 +76,11 @@ const std::string cyan      {"\033[0;36m"};
 const std::string white     {"\033[0;37m"};
 const std::string def       {"\033[0m"};
 
+const std::string colorDebug = green;
+const std::string colorInfo = def;
+const std::string colorWarn = yellow;
 const std::string colorFatal = red;
 const std::string colorError = red;
-const std::string colorWarn = magenta;
-const std::string colorInfo = blue;
-const std::string colorDebug = cyan;
 
 inline const std::string getResetColor() {
   return def;
@@ -92,10 +92,10 @@ inline const std::string getLogColor(const message_logger::log::levels::Level& l
     return colorDebug;
   case message_logger::log::levels::Info:
     return colorInfo;
-  case message_logger::log::levels::Error:
-    return colorError;
   case message_logger::log::levels::Warn:
     return colorWarn;
+  case message_logger::log::levels::Error:
+    return colorError;
   case message_logger::log::levels::Fatal:
     return colorFatal;
   default:
@@ -109,11 +109,11 @@ inline const std::string getLogLevel(const message_logger::log::levels::Level& l
   case message_logger::log::levels::Debug:
     return std::string{"DEBUG"};
   case message_logger::log::levels::Info:
-    return std::string{"INFO"};
+    return std::string{" INFO"};
+  case message_logger::log::levels::Warn:
+    return std::string{" WARN"};
   case message_logger::log::levels::Error:
     return std::string{"ERROR"};
-  case message_logger::log::levels::Warn:
-    return std::string{"WARN"};
   case message_logger::log::levels::Fatal:
     return std::string{"FATAL"};
   default:

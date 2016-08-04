@@ -56,13 +56,13 @@ namespace log {
     { \
       std::stringstream melo_assert_stringstream; \
       melo_assert_stringstream << message_logger::log::colorFatal << message_logger::common::internal::melo_string_format(__VA_ARGS__) << message_logger::log::getResetColor(); \
-      message_logger::common::internal::melo_throw_exception<message_logger::log::melo_fatal>("[CTRL FATAL] ", __FUNCTION__,__FILE__,__LINE__, melo_assert_stringstream.str()); \
+      message_logger::common::internal::melo_throw_exception<message_logger::log::melo_fatal>("[FATAL] ", __FUNCTION__,__FILE__,__LINE__, melo_assert_stringstream.str()); \
     } \
     break; \
   default: \
     { \
       std::stringstream melo_stringstream; \
-      melo_stringstream << message_logger::log::getLogColor(level) << "[CTRL " << message_logger::log::getLogLevel(level)  << "] " << message_logger::common::internal::melo_string_format(__VA_ARGS__) << message_logger::log::getResetColor(); \
+      melo_stringstream << message_logger::log::getLogColor(level) << "[" << message_logger::log::getLogLevel(level)  << "] " << message_logger::common::internal::melo_string_format(__VA_ARGS__) << message_logger::log::getResetColor(); \
       std::cout << melo_stringstream.str() << std::endl; \
     } \
     break; \
@@ -77,13 +77,13 @@ namespace log {
         { \
           std::stringstream melo_assert_stringstream;             \
           melo_assert_stringstream << message_logger::log::colorFatal << message << message_logger::log::getResetColor(); \
-          message_logger::common::internal::melo_throw_exception<message_logger::log::melo_fatal>("[CTRL FATAL] ", __FUNCTION__,__FILE__,__LINE__, melo_assert_stringstream.str()); \
+          message_logger::common::internal::melo_throw_exception<message_logger::log::melo_fatal>("[FATAL] ", __FUNCTION__,__FILE__,__LINE__, melo_assert_stringstream.str()); \
         } \
         break; \
       default: \
         { \
           std::stringstream melo_stringstream; \
-          melo_stringstream << message_logger::log::getLogColor(level) << "[CTRL " << message_logger::log::getLogLevel(level)  << "] " << message << message_logger::log::getResetColor(); \
+          melo_stringstream << message_logger::log::getLogColor(level) << "[" << message_logger::log::getLogLevel(level)  << "] " << message << message_logger::log::getResetColor(); \
           std::cout << melo_stringstream.str() << std::endl; \
         } \
         break; \
@@ -95,7 +95,7 @@ namespace log {
     { \
       std::stringstream melo_stringstream; \
       message_logger::common::internal::source_file_pos sfp(__FUNCTION__,__FILE__,__LINE__); \
-      melo_stringstream << message_logger::log::getLogColor(level) << "[CTRL " << message_logger::log::getLogLevel(level)  << "] " <<  sfp.toString() << " " << message_logger::common::internal::melo_string_format(__VA_ARGS__) << message_logger::log::getResetColor(); \
+      melo_stringstream << message_logger::log::getLogColor(level) << "[" << message_logger::log::getLogLevel(level)  << "] " <<  sfp.toString() << " " << message_logger::common::internal::melo_string_format(__VA_ARGS__) << message_logger::log::getResetColor(); \
       std::cout << melo_stringstream.str() << std::endl; \
     }
 
@@ -104,7 +104,7 @@ namespace log {
     { \
       std::stringstream melo_stringstream; \
       message_logger::common::internal::source_file_pos sfp(__FUNCTION__,__FILE__,__LINE__); \
-      melo_stringstream << message_logger::log::getLogColor(level) << "[CTRL " << message_logger::log::getLogLevel(level)  << "] " <<  sfp.toString() << " " << message << message_logger::log::getResetColor(); \
+      melo_stringstream << message_logger::log::getLogColor(level) << "[" << message_logger::log::getLogLevel(level)  << "] " <<  sfp.toString() << " " << message << message_logger::log::getResetColor(); \
       std::cout << melo_stringstream.str() << std::endl; \
     }
 

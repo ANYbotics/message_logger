@@ -76,7 +76,7 @@ namespace log {
     ROS_FATAL(__VA_ARGS__); \
     std::stringstream melo_assert_stringstream; \
     melo_assert_stringstream << message_logger::log::colorFatal << message_logger::common::internal::melo_string_format(__VA_ARGS__) << message_logger::log::getResetColor(); \
-    message_logger::common::internal::melo_throw_exception<message_logger::log::melo_fatal>("[CTRL FATAL] ", __FUNCTION__,__FILE__,__LINE__, melo_assert_stringstream.str()); \
+    message_logger::common::internal::melo_throw_exception<message_logger::log::melo_fatal>("[FATAL] ", __FUNCTION__,__FILE__,__LINE__, melo_assert_stringstream.str()); \
     } \
     break; \
   default: \
@@ -116,7 +116,7 @@ namespace log {
     ROS_FATAL_STREAM(message); \
     std::stringstream melo_assert_stringstream;             \
     melo_assert_stringstream << message_logger::log::colorFatal << message << message_logger::log::getResetColor(); \
-    message_logger::common::internal::melo_throw_exception<message_logger::log::melo_fatal>("[CTRL FATAL] ", __FUNCTION__,__FILE__,__LINE__, melo_assert_stringstream.str()); \
+    message_logger::common::internal::melo_throw_exception<message_logger::log::melo_fatal>("[FATAL] ", __FUNCTION__,__FILE__,__LINE__, melo_assert_stringstream.str()); \
     } \
     break; \
   default: \
@@ -156,7 +156,7 @@ namespace log {
     ROS_FATAL(__VA_ARGS__); \
     std::stringstream melo_assert_stringstream; \
     melo_assert_stringstream << message_logger::log::colorFatal << message_logger::common::internal::melo_string_format(__VA_ARGS__) << message_logger::log::getResetColor(); \
-    message_logger::common::internal::melo_throw_exception<message_logger::log::melo_fatal>("[CTRL FATAL] ", __FUNCTION__,__FILE__,__LINE__, melo_assert_stringstream.str()); \
+    message_logger::common::internal::melo_throw_exception<message_logger::log::melo_fatal>("[FATAL] ", __FUNCTION__,__FILE__,__LINE__, melo_assert_stringstream.str()); \
     } \
     break; \
   default: \
@@ -196,7 +196,7 @@ namespace log {
         ROS_FATAL_STREAM(message); \
         std::stringstream melo_assert_stringstream;             \
         melo_assert_stringstream << message_logger::log::colorFatal << message << message_logger::log::getResetColor(); \
-        message_logger::common::internal::melo_throw_exception<message_logger::log::melo_fatal>("[CTRL FATAL] ", __FUNCTION__,__FILE__,__LINE__, melo_assert_stringstream.str()); \
+        message_logger::common::internal::melo_throw_exception<message_logger::log::melo_fatal>("[FATAL] ", __FUNCTION__,__FILE__,__LINE__, melo_assert_stringstream.str()); \
         } \
         break; \
       default: \
@@ -236,7 +236,7 @@ namespace log {
         ROS_FATAL_THROTTLE(rate, __VA_ARGS__); \
         std::stringstream melo_assert_stringstream; \
         melo_assert_stringstream << message_logger::log::colorFatal << message_logger::common::internal::melo_string_format(__VA_ARGS__) << message_logger::log::getResetColor(); \
-        message_logger::common::internal::melo_throw_exception<message_logger::log::melo_fatal>("[CTRL FATAL] ", __FUNCTION__,__FILE__,__LINE__, melo_assert_stringstream.str()); \
+        message_logger::common::internal::melo_throw_exception<message_logger::log::melo_fatal>("[FATAL] ", __FUNCTION__,__FILE__,__LINE__, melo_assert_stringstream.str()); \
         } \
         break; \
       default: \
@@ -276,7 +276,7 @@ namespace log {
         ROS_FATAL_STREAM_THROTTLE(rate, message); \
         std::stringstream melo_assert_stringstream;             \
         melo_assert_stringstream << message_logger::log::colorFatal << message << message_logger::log::getResetColor(); \
-        message_logger::common::internal::melo_throw_exception<message_logger::log::melo_fatal>("[CTRL FATAL] ", __FUNCTION__,__FILE__,__LINE__, melo_assert_stringstream.str()); \
+        message_logger::common::internal::melo_throw_exception<message_logger::log::melo_fatal>("[FATAL] ", __FUNCTION__,__FILE__,__LINE__, melo_assert_stringstream.str()); \
         } \
         break; \
       default: \
