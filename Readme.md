@@ -30,5 +30,4 @@ This library can be built with catkin.
 
 ## Usage
 
-This library defines macros to wrap to ROS logger macros or to std::cout calls. Five levels are defined: debug, info, warning, error, fatal. Calling the fatal variants throws an exception and terminates the program (if not captured).
-
+This library defines macros to wrap to ROS logger macros or to std::cout calls. You can enable the usage of std::cout by providing the -DUSE_COUT flag to catkin (or cmake). Five levels are defined: debug, info, warning, error, fatal. Calling the fatal variants throws an exception and terminates the program (if not captured).
