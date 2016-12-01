@@ -81,6 +81,7 @@ const std::string colorInfo = def;
 const std::string colorWarn = yellow;
 const std::string colorFatal = red;
 const std::string colorError = red;
+const std::string colorFunction = cyan;
 
 inline const std::string getResetColor() {
   return def;
