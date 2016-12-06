@@ -62,7 +62,7 @@ namespace log {
   default: \
     { \
       std::stringstream melo_stringstream; \
-      melo_stringstream << message_logger::log::getLogColor(level) << "[" << message_logger::log::getLogLevel(level)  << "] " << message_logger::log::colorFunction << "[" << __FUNCTION__ << "] " << message_logger::log::getLogColor(level) << message_logger::common::internal::melo_string_format(__VA_ARGS__) << message_logger::log::getResetColor(); \
+      melo_stringstream << message_logger::log::getLogColor(level) << "[" << message_logger::log::getLogLevel(level)  << "] " << message_logger::log::parseMemberName(__PRETTY_FUNCTION__) << message_logger::log::getLogColor(level) << message_logger::common::internal::melo_string_format(__VA_ARGS__) << message_logger::log::getResetColor(); \
       std::cout << melo_stringstream.str() << std::endl; \
     } \
     break; \
@@ -83,7 +83,7 @@ namespace log {
       default: \
         { \
           std::stringstream melo_stringstream; \
-          melo_stringstream << message_logger::log::getLogColor(level) << "[" << message_logger::log::getLogLevel(level)  << "] " << message_logger::log::colorFunction << "[" << __FUNCTION__ << "] " << message_logger::log::getLogColor(level) << message << message_logger::log::getResetColor(); \
+          melo_stringstream << message_logger::log::getLogColor(level) << "[" << message_logger::log::getLogLevel(level)  << "] " << message_logger::log::parseMemberName(__PRETTY_FUNCTION__) << message_logger::log::getLogColor(level) << message << message_logger::log::getResetColor(); \
           std::cout << melo_stringstream.str() << std::endl; \
         } \
         break; \

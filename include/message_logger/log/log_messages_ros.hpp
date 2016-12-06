@@ -51,7 +51,7 @@ namespace log {
 #define MELO_LOG(level, ...) \
 { \
   std::stringstream melo_stringstream; \
-  melo_stringstream << message_logger::log::colorFunction << "[" << __FUNCTION__ << "] " << message_logger::log::getLogColor(level) << message_logger::common::internal::melo_string_format(__VA_ARGS__) << message_logger::log::getResetColor(); \
+  melo_stringstream << message_logger::log::parseMemberName(__PRETTY_FUNCTION__) << message_logger::log::getLogColor(level) << message_logger::common::internal::melo_string_format(__VA_ARGS__) << message_logger::log::getResetColor(); \
   switch (level) { \
   case message_logger::log::levels::Debug: \
     { \
@@ -93,7 +93,7 @@ namespace log {
 #define MELO_LOG_STREAM(level, message) \
 { \
   std::stringstream melo_stringstream; \
-  melo_stringstream << message_logger::log::colorFunction << "[" << __FUNCTION__ << "] " << message_logger::log::getLogColor(level) << message << message_logger::log::getResetColor(); \
+  melo_stringstream << message_logger::log::parseMemberName(__PRETTY_FUNCTION__) << message_logger::log::getLogColor(level) << message << message_logger::log::getResetColor(); \
   switch (level) { \
   case message_logger::log::levels::Debug: \
     { \
@@ -141,7 +141,7 @@ namespace log {
 #define MELO_LOG_THROTTLE(rate, level, ...) \
     { \
       std::stringstream melo_stringstream; \
-      melo_stringstream << message_logger::log::colorFunction << "[" << __FUNCTION__ << "] " << message_logger::log::getLogColor(level) << message_logger::common::internal::melo_string_format(__VA_ARGS__) << message_logger::log::getResetColor(); \
+      melo_stringstream << message_logger::log::parseMemberName(__PRETTY_FUNCTION__) << message_logger::log::getLogColor(level) << message_logger::common::internal::melo_string_format(__VA_ARGS__) << message_logger::log::getResetColor(); \
       switch (level) { \
       case message_logger::log::levels::Debug: \
         { \
@@ -183,7 +183,7 @@ namespace log {
 #define MELO_LOG_THROTTLE_STREAM(rate, level, message) \
     { \
       std::stringstream melo_stringstream; \
-      melo_stringstream << message_logger::log::colorFunction << "[" << __FUNCTION__ << "] " << message_logger::log::getLogColor(level) << message << message_logger::log::getResetColor(); \
+      melo_stringstream << message_logger::log::parseMemberName(__PRETTY_FUNCTION__) << message_logger::log::getLogColor(level) << message << message_logger::log::getResetColor(); \
       switch (level) { \
       case message_logger::log::levels::Debug: \
         { \
