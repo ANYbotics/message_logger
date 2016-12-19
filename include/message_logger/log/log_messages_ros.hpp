@@ -50,30 +50,32 @@ namespace log {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #define MELO_LOG(level, ...) \
 { \
+  std::stringstream melo_stringstream; \
+  melo_stringstream << message_logger::log::parseMemberName(__PRETTY_FUNCTION__) << message_logger::log::getLogColor(level) << message_logger::common::internal::melo_string_format(__VA_ARGS__) << message_logger::log::getResetColor(); \
   switch (level) { \
   case message_logger::log::levels::Debug: \
     { \
-    ROS_DEBUG(__VA_ARGS__); \
+    ROS_DEBUG("%s", melo_stringstream.str().c_str()); \
     } \
     break; \
   case message_logger::log::levels::Info: \
     { \
-    ROS_INFO(__VA_ARGS__); \
+    ROS_INFO("%s", melo_stringstream.str().c_str()); \
     } \
     break; \
   case message_logger::log::levels::Warn: \
     { \
-    ROS_WARN(__VA_ARGS__); \
+    ROS_WARN("%s", melo_stringstream.str().c_str()); \
     } \
     break; \
   case message_logger::log::levels::Error: \
     { \
-      ROS_ERROR(__VA_ARGS__); \
+      ROS_ERROR("%s", melo_stringstream.str().c_str()); \
     } \
     break; \
   case message_logger::log::levels::Fatal: \
     { \
-    ROS_FATAL(__VA_ARGS__); \
+    ROS_FATAL("%s", melo_stringstream.str().c_str()); \
     std::stringstream melo_assert_stringstream; \
     melo_assert_stringstream << message_logger::log::colorFatal << message_logger::common::internal::melo_string_format(__VA_ARGS__) << message_logger::log::getResetColor(); \
     message_logger::common::internal::melo_throw_exception<message_logger::log::melo_fatal>("[FATAL] ", __FUNCTION__,__FILE__,__LINE__, melo_assert_stringstream.str()); \
@@ -90,30 +92,32 @@ namespace log {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #define MELO_LOG_STREAM(level, message) \
 { \
+  std::stringstream melo_stringstream; \
+  melo_stringstream << message_logger::log::parseMemberName(__PRETTY_FUNCTION__) << message_logger::log::getLogColor(level) << message << message_logger::log::getResetColor(); \
   switch (level) { \
   case message_logger::log::levels::Debug: \
     { \
-    ROS_DEBUG_STREAM(message); \
+    ROS_DEBUG_STREAM(melo_stringstream.str()); \
     } \
     break; \
   case message_logger::log::levels::Info: \
     { \
-    ROS_INFO_STREAM(message); \
+    ROS_INFO_STREAM(melo_stringstream.str()); \
     } \
     break; \
   case message_logger::log::levels::Warn: \
     { \
-    ROS_WARN_STREAM(message); \
+    ROS_WARN_STREAM(melo_stringstream.str()); \
     } \
     break; \
   case message_logger::log::levels::Error: \
     { \
-    ROS_ERROR_STREAM(message); \
+    ROS_ERROR_STREAM(melo_stringstream.str()); \
     } \
     break; \
   case message_logger::log::levels::Fatal: \
     { \
-    ROS_FATAL_STREAM(message); \
+    ROS_FATAL_STREAM(melo_stringstream.str()); \
     std::stringstream melo_assert_stringstream;             \
     melo_assert_stringstream << message_logger::log::colorFatal << message << message_logger::log::getResetColor(); \
     message_logger::common::internal::melo_throw_exception<message_logger::log::melo_fatal>("[FATAL] ", __FUNCTION__,__FILE__,__LINE__, melo_assert_stringstream.str()); \
@@ -128,112 +132,40 @@ namespace log {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#define MELO_LOG_FP(level, ...) \
-{ \
-  switch (level) { \
-  case message_logger::log::levels::Debug: \
-    { \
-    ROS_DEBUG(__VA_ARGS__); \
-    } \
-    break; \
-  case message_logger::log::levels::Info: \
-    { \
-    ROS_INFO(__VA_ARGS__); \
-    } \
-    break; \
-  case message_logger::log::levels::Warn: \
-    { \
-    ROS_WARN(__VA_ARGS__); \
-    } \
-    break; \
-  case message_logger::log::levels::Error: \
-    { \
-    ROS_ERROR(__VA_ARGS__); \
-    } \
-    break; \
-  case message_logger::log::levels::Fatal: \
-    { \
-    ROS_FATAL(__VA_ARGS__); \
-    std::stringstream melo_assert_stringstream; \
-    melo_assert_stringstream << message_logger::log::colorFatal << message_logger::common::internal::melo_string_format(__VA_ARGS__) << message_logger::log::getResetColor(); \
-    message_logger::common::internal::melo_throw_exception<message_logger::log::melo_fatal>("[FATAL] ", __FUNCTION__,__FILE__,__LINE__, melo_assert_stringstream.str()); \
-    } \
-    break; \
-  default: \
-    { \
-    ROS_INFO(__VA_ARGS__); \
-    } \
-    break; \
-  } \
-}
+#define MELO_LOG_FP(level, ...) MELO_LOG(level, __VA_ARGS__)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#define MELO_LOG_STREAM_FP(level, message) \
-    { \
-      switch (level) { \
-      case message_logger::log::levels::Debug: \
-        { \
-        ROS_DEBUG_STREAM(message); \
-        } \
-        break; \
-      case message_logger::log::levels::Info: \
-        { \
-        ROS_INFO_STREAM(message); \
-        } \
-        break; \
-      case message_logger::log::levels::Warn: \
-        { \
-        ROS_WARN_STREAM(message); \
-        } \
-        break; \
-      case message_logger::log::levels::Error: \
-        { \
-        ROS_ERROR_STREAM(message); \
-        } \
-        break; \
-      case message_logger::log::levels::Fatal: \
-        { \
-        ROS_FATAL_STREAM(message); \
-        std::stringstream melo_assert_stringstream;             \
-        melo_assert_stringstream << message_logger::log::colorFatal << message << message_logger::log::getResetColor(); \
-        message_logger::common::internal::melo_throw_exception<message_logger::log::melo_fatal>("[FATAL] ", __FUNCTION__,__FILE__,__LINE__, melo_assert_stringstream.str()); \
-        } \
-        break; \
-      default: \
-        { \
-        ROS_INFO_STREAM(message); \
-        } \
-        break; \
-      } \
-    }
+#define MELO_LOG_STREAM_FP(level, message) MELO_LOG_STREAM(level, message)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #define MELO_LOG_THROTTLE(rate, level, ...) \
     { \
+      std::stringstream melo_stringstream; \
+      melo_stringstream << message_logger::log::parseMemberName(__PRETTY_FUNCTION__) << message_logger::log::getLogColor(level) << message_logger::common::internal::melo_string_format(__VA_ARGS__) << message_logger::log::getResetColor(); \
       switch (level) { \
       case message_logger::log::levels::Debug: \
         { \
-        ROS_DEBUG_THROTTLE(rate, __VA_ARGS__); \
+        ROS_DEBUG_THROTTLE(rate, "%s", melo_stringstream.str().c_str()); \
         } \
         break; \
       case message_logger::log::levels::Info: \
         { \
-        ROS_INFO_THROTTLE(rate, __VA_ARGS__); \
+        ROS_INFO_THROTTLE(rate, "%s", melo_stringstream.str().c_str()); \
         } \
         break; \
       case message_logger::log::levels::Warn: \
         { \
-        ROS_WARN_THROTTLE(rate, __VA_ARGS__); \
+        ROS_WARN_THROTTLE(rate, "%s", melo_stringstream.str().c_str()); \
         } \
         break; \
       case message_logger::log::levels::Error: \
         { \
-          ROS_ERROR_THROTTLE(rate, __VA_ARGS__); \
+          ROS_ERROR_THROTTLE(rate, "%s", melo_stringstream.str().c_str()); \
         } \
         break; \
       case message_logger::log::levels::Fatal: \
         { \
-        ROS_FATAL_THROTTLE(rate, __VA_ARGS__); \
+        ROS_FATAL_THROTTLE(rate, "%s", melo_stringstream.str().c_str()); \
         std::stringstream melo_assert_stringstream; \
         melo_assert_stringstream << message_logger::log::colorFatal << message_logger::common::internal::melo_string_format(__VA_ARGS__) << message_logger::log::getResetColor(); \
         message_logger::common::internal::melo_throw_exception<message_logger::log::melo_fatal>("[FATAL] ", __FUNCTION__,__FILE__,__LINE__, melo_assert_stringstream.str()); \
@@ -250,30 +182,32 @@ namespace log {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #define MELO_LOG_THROTTLE_STREAM(rate, level, message) \
     { \
+      std::stringstream melo_stringstream; \
+      melo_stringstream << message_logger::log::parseMemberName(__PRETTY_FUNCTION__) << message_logger::log::getLogColor(level) << message << message_logger::log::getResetColor(); \
       switch (level) { \
       case message_logger::log::levels::Debug: \
         { \
-        ROS_DEBUG_STREAM_THROTTLE(rate, message); \
+        ROS_DEBUG_STREAM_THROTTLE(rate, melo_stringstream.str()); \
         } \
         break; \
       case message_logger::log::levels::Info: \
         { \
-        ROS_INFO_STREAM_THROTTLE(rate, message); \
+        ROS_INFO_STREAM_THROTTLE(rate, melo_stringstream.str()); \
         } \
         break; \
       case message_logger::log::levels::Warn: \
         { \
-        ROS_WARN_STREAM_THROTTLE(rate, message); \
+        ROS_WARN_STREAM_THROTTLE(rate, melo_stringstream.str()); \
         } \
         break; \
       case message_logger::log::levels::Error: \
         { \
-        ROS_ERROR_STREAM_THROTTLE(rate, message); \
+        ROS_ERROR_STREAM_THROTTLE(rate, melo_stringstream.str()); \
         } \
         break; \
       case message_logger::log::levels::Fatal: \
         { \
-        ROS_FATAL_STREAM_THROTTLE(rate, message); \
+        ROS_FATAL_STREAM_THROTTLE(rate, melo_stringstream.str()); \
         std::stringstream melo_assert_stringstream;             \
         melo_assert_stringstream << message_logger::log::colorFatal << message << message_logger::log::getResetColor(); \
         message_logger::common::internal::melo_throw_exception<message_logger::log::melo_fatal>("[FATAL] ", __FUNCTION__,__FILE__,__LINE__, melo_assert_stringstream.str()); \

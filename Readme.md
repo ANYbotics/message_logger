@@ -30,4 +30,5 @@ This library can be built with catkin.
 
 ## Usage
 
-This library defines macros to wrap to ROS logger macros or to std::cout calls. You can enable the usage of std::cout by providing the -DUSE_COUT flag to catkin (or cmake). Five levels are defined: debug, info, warning, error, fatal. Calling the fatal variants throws an exception and terminates the program (if not captured).
+This library defines macros to wrap to ROS logger macros or to std::cout calls. You can enable the usage of std::cout by providing the ```-DMELO_USE_COUT``` flag to catkin (or cmake). Five levels are defined: debug, info, warning, error, fatal. Calling the fatal variants throws an exception and terminates the program (if not captured).
+This library can also prepend the class and function name of the log function callers, e.g. ```void MyClass::MyFunction() { MELO_INFO("bla bla"); }``` prints ```[Info] [Timestamp] [MyClass::MyFunction] bla bla```. To enable this feature, provide the ```-DMELO_FUNCTION_PRINTS``` flag to catkin (or cmake).

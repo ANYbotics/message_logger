@@ -41,11 +41,14 @@
 #pragma once
 
 #include "message_logger/common/assert_macros.hpp"
-#ifdef USE_COUT
+#ifdef MELO_USE_COUT
 #include "message_logger/log/log_messages_std.hpp"
 #else
 #include "message_logger/log/log_messages_ros.hpp"
 #endif
+
+// todo: replace with std as soon as gcc 4.9.x is standard in ubuntu repo
+#include <boost/regex.hpp>
 
 namespace message_logger {
 namespace log {
@@ -81,6 +84,7 @@ const std::string colorInfo = def;
 const std::string colorWarn = yellow;
 const std::string colorFatal = red;
 const std::string colorError = red;
+const std::string colorFunction = cyan;
 
 inline const std::string getResetColor() {
   return def;
@@ -120,6 +124,20 @@ inline const std::string getLogLevel(const message_logger::log::levels::Level& l
     break;
   }
   return std::string{"UNKNOWN"};
+}
+
+inline std::string parseMemberName(const std::string& in) {
+#ifdef MELO_FUNCTION_PRINTS
+    using namespace boost; // todo: replace with std as soon as gcc 4.9.x is standard in ubuntu repo
+    regex re(".*((:{2}|\\s)([a-zA-Z0-9]*)(<.*>)?(:{2})|\\s+)([a-zA-Z0-9]+)\\s*(<.*>)?\\s*\\(.*\\).*");
+    smatch match;
+    if(regex_match(in, match, re)) {
+        return colorFunction + "[" + match.str(3) + match.str(5) + match.str(6) + "] ";
+    }
+    return std::string();
+#else
+    return std::string();
+#endif
 }
 
 MELO_DEFINE_EXCEPTION(melo_fatal, std::runtime_error)

@@ -5,7 +5,7 @@ project(message_logger)
 # Find Catkin
 find_package(catkin REQUIRED)
 
-if(DEFINED ENV{ROS_DISTRO} AND NOT DEFINED USE_COUT)
+if(DEFINED ENV{ROS_DISTRO} AND NOT DEFINED MELO_USE_COUT)
   message(STATUS "Building message_logger using ros.")
   catkin_package(
     INCLUDE_DIRS include
@@ -21,7 +21,11 @@ else()
     CATKIN_DEPENDS 
     CFG_EXTRAS message_logger.cmake 
   )
-  add_definitions(-DUSE_COUT)
+  add_definitions(-DMELO_USE_COUT)
+endif()
+
+if(DEFINED MELO_FUNCTION_PRINTS)
+  add_definitions(-DMELO_FUNCTION_PRINTS)
 endif()
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
