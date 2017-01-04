@@ -41,6 +41,8 @@
 #pragma once
 
 #include "message_logger/common/assert_macros.hpp"
+#include "message_logger/common/colors.hpp"
+
 #ifdef MELO_USE_COUT
 #include "message_logger/log/log_messages_std.hpp"
 #else
@@ -69,25 +71,15 @@ enum Level
 
 typedef levels::Level Level;
 
-const std::string black     {"\033[0;30m"};
-const std::string red       {"\033[0;31m"};
-const std::string green     {"\033[0;32m"};
-const std::string yellow    {"\033[0;33m"};
-const std::string blue      {"\033[0;34m"};
-const std::string magenta   {"\033[0;35m"};
-const std::string cyan      {"\033[0;36m"};
-const std::string white     {"\033[0;37m"};
-const std::string def       {"\033[0m"};
-
-const std::string colorDebug = green;
-const std::string colorInfo = def;
-const std::string colorWarn = yellow;
-const std::string colorFatal = red;
-const std::string colorError = red;
-const std::string colorFunction = cyan;
+const std::string colorDebug = color::green;
+const std::string colorInfo = color::def;
+const std::string colorWarn = color::yellow;
+const std::string colorFatal = color::red;
+const std::string colorError = color::red;
+const std::string colorFunction = color::cyan;
 
 inline const std::string getResetColor() {
-  return def;
+  return color::def;
 }
 
 inline const std::string getLogColor(const message_logger::log::levels::Level& level) {
@@ -105,7 +97,7 @@ inline const std::string getLogColor(const message_logger::log::levels::Level& l
   default:
     break;
   }
-  return def;
+  return color::def;
 }
 
 inline const std::string getLogLevel(const message_logger::log::levels::Level& level) {

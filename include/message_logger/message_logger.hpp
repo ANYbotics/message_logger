@@ -41,4 +41,5 @@
 #pragma once
 
 #include "message_logger/log/log_messages.hpp"
-
+// Colors are not likely to change -> backend might -> direct include
+#include "message_logger/common/colors.hpp"
