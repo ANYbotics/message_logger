@@ -6,6 +6,8 @@ Date: Dec. 2014
 
 Software License Agreement: BSD License
 
+[Documentation](http://docs.leggedrobotics.com/message_logger_doc/)
+
 INSTALLATION
 ------------
 
