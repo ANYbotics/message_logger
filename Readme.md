@@ -1,4 +1,4 @@
-# An Inteface for Message Logging
+# An Interface for Message Logging
 
 ## Overview
 
