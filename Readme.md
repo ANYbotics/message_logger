@@ -11,11 +11,11 @@ The source code is released under a [BSD 3-Clause license](LICENSE).
 **Author(s):** Christian Gehring
 **Date:** Dec. 2014
 
-
 ## Building
 
-In order to install, clone the latest version from this repository into your catkin workspace and compile the packages.
+[![Build Status](http://rsl-ci.ethz.ch/buildStatus/icon?job=message_logger)](http://rsl-ci.ethz.ch/job/message_logger/)
 
+In order to install, clone the latest version from this repository into your catkin workspace and compile the packages.
 
 ## Usage
 
