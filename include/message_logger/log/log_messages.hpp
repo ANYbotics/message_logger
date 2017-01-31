@@ -75,7 +75,7 @@ namespace log {
 #define MELO_DEBUG_STREAM(message) MELO_LOG_STREAM(::message_logger::log::levels::Debug, message)
 #define MELO_DEBUG_STREAM_FP(message) MELO_LOG_STREAM_FP(::message_logger::log::levels::Debug, message)
 #define MELO_DEBUG_THROTTLE(rate, ...) MELO_LOG_THROTTLE(rate, ::message_logger::log::levels::Debug, __VA_ARGS__)
-#define MELO_DEBUG_THROTTLE_STREAM(rate, ...) MELO_LOG_THROTTLE(rate, ::message_logger::log::levels::Debug, __VA_ARGS__)
+#define MELO_DEBUG_THROTTLE_STREAM(rate, message) MELO_LOG_THROTTLE_STREAM(rate, ::message_logger::log::levels::Debug, message)
 #else
 #define MELO_DEBUG(...)
 #define MELO_DEBUG_FP(...)
