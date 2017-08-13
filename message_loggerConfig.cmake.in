@@ -1,0 +1,9 @@
+# - Config file for the message_logger package
+# It defines the following variables
+#  message_logger_INCLUDE_DIRS - include directories for message_logger
+#  message_logger_LIBRARIES    - libraries to link against
+
+# Compute paths
+get_filename_component(message_logger_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+set(message_logger_INCLUDE_DIRS "@message_logger_include_dirs@")
+set(message_logger_LIBRARIES @message_logger_library@)
