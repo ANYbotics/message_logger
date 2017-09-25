@@ -44,7 +44,7 @@ if(catkin_FOUND)
   )
 endif()
 
-add_library(${PROJECT_NAME} SHARED 
+add_library(${PROJECT_NAME}
   src/time/Time.cpp  
   src/time/TimeStd.cpp  
 )
