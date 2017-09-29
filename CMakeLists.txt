@@ -82,4 +82,31 @@ if(NOT catkin_FOUND)
   configure_file(message_loggerConfig.cmake.in
     "${PROJECT_BINARY_DIR}/message_loggerConfig.cmake" @ONLY
   )
+
+### Install Build ###
+
+  # Change the include location for the case of an install location
+  set(message_logger_include_dirs
+    ${CMAKE_INSTALL_PREFIX}/include
+  )
+
+  # We put the generated file for installation in a different repository (i.e., ./CMakeFiles/)
+  configure_file(message_loggerConfig.cmake.in
+    "${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/message_loggerConfig.cmake" @ONLY
+  )
+
+  install(FILES
+    "${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/message_loggerConfig.cmake"
+    DESTINATION share/message_logger/cmake COMPONENT dev
+  )
+
+  install(TARGETS ${PROJECT_NAME}
+    ARCHIVE DESTINATION lib
+    LIBRARY DESTINATION lib
+    RUNTIME DESTINATION bin
+  )
+
+  install(DIRECTORY include/message_logger/
+    DESTINATION include/message_logger
+  )
 endif()
