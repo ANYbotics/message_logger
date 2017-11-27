@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>message_logger</name>
-  <version>0.1.2</version>
+  <version>0.1.3</version>
   <description>The message logger package</description>
   <maintainer email="gehrinch@ethz.ch">Christian Gehring</maintainer>
   <license>BSD</license>
