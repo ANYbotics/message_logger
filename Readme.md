@@ -19,5 +19,34 @@ In order to install, clone the latest version from this repository into your cat
 
 ## Usage
 
-This library defines macros to wrap to ROS logger macros or to std::cout calls. You can enable the usage of std::cout by providing the ```-DMELO_USE_COUT``` flag to catkin (or cmake). Five levels are defined: debug, info, warning, error, fatal. Calling the fatal variants throws an exception and terminates the program (if not captured).
-This library can also prepend the class and function name of the log function callers, e.g. ```void MyClass::MyFunction() { MELO_INFO("bla bla"); }``` prints ```[Info] [Timestamp] [MyClass::MyFunction] bla bla```. To enable this feature, provide the ```-DMELO_FUNCTION_PRINTS``` flag to catkin (or cmake).
+### Selecting the Backend
+
+This library defines macros to wrap to ROS logger macros or to std::cout calls. The default backend is the ROS logger. You can enable the usage of std::cout by providing defining `MELO_USE_COUT` in the `CMakeLists.txt` of your package:
+
+```
+add_definitions(-DMELO_USE_COUT)
+```
+
+### Logging Levels
+
+Five logging levels are defined: debug, info, warning, error, fatal. Please note that the following levels implement a special behavior:
+
+**debug**
+
+When using the std::cout backend and building in Release, the debug logs are removed for efficiency. When using the ROS backend, the debug logs are kept per default. To change that, set the `ROSCONSOLE_MIN_SEVERITY` to `ROSCONSOLE_SEVERITY_INFO` in the `CMakeLists.txt` of your package:
+
+```
+add_definitions(-DROSCONSOLE_MIN_SEVERITY=ROSCONSOLE_SEVERITY_INFO)
+```
+
+The [official documentation](http://wiki.ros.org/rosconsole#Compile-time_Logger_Removal) contains more information.
+
+**fatal**
+
+Calling the fatal variants throws an exception and terminates the program (if not captured).
+
+### Additional Output
+
+This library can also prepend the class and function name of the log function callers, e.g. `void MyClass::MyFunction() { MELO_INFO("bla bla"); }` prints `[Info] [Timestamp] [MyClass::MyFunction] bla bla`. To enable this feature, provide the `-DMELO_FUNCTION_PRINTS` flag to catkin (or cmake).
+
+Note that when using the ROS backend, you can use its [built in functionality](http://wiki.ros.org/rosconsole#Console_Output_Formatting) to print more information.
