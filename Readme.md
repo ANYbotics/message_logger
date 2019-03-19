@@ -29,24 +29,43 @@ add_definitions(-DMELO_USE_COUT)
 
 ### Logging Levels
 
-Five logging levels are defined: debug, info, warning, error, fatal. Please note that the following levels implement a special behavior:
+Five logging levels are defined: debug, info, warning, error, fatal.
 
-**debug**
+The following logging levels are compiled per default:
 
-When using the std::cout backend and building in Release, the debug logs are removed for efficiency. When using the ROS backend, the debug logs are kept per default. To change that, set the `ROSCONSOLE_MIN_SEVERITY` to `ROSCONSOLE_SEVERITY_INFO` in the `CMakeLists.txt` of your package:
+**std::cout built in Debug:** debug, info, warning, error, fatal.
+
+**std::cout built in Release:** info, warning, error, fatal.
+
+**ROS built in Debug or Release:** debug, info, warning, error, fatal.
+
+Note that when using the ROS backend, even though the debug level is kept when compiling, it does not show up in the console.
+This can be changed by calling the `set_logger_level` service of your node change the logger level online.
+
+To change change which logger levels are kept when compiling, set the `MELO_MIN_SEVERITY` to your desired level in the `CMakeLists.txt` of your package, e.g.:
 
 ```
-add_definitions(-DROSCONSOLE_MIN_SEVERITY=ROSCONSOLE_SEVERITY_INFO)
+add_definitions(-DMELO_MIN_SEVERITY=MELO_SEVERITY_INFO)
 ```
 
-The [official documentation](http://wiki.ros.org/rosconsole#Compile-time_Logger_Removal) contains more information.
+The available levels are
 
-**fatal**
+* `MELO_SEVERITY_DEBUG`: Keep all logs.
+* `MELO_SEVERITY_INFO`:  Remove debug logs.
+* `MELO_SEVERITY_WARN`:  Remove debug and info logs.
+* `MELO_SEVERITY_ERROR`: Keep only error and fatal logs.
+* `MELO_SEVERITY_FATAL`: Keep only fatal logs.
+* `MELO_SEVERITY_NONE`:  Remove all logs.
 
-Calling the fatal variants throws an exception and terminates the program (if not captured).
+The fatal logging variants throw an exception and therefore terminate the program, if the exception is not captured.
 
 ### Additional Output
 
-This library can also prepend the class and function name of the log function callers, e.g. `void MyClass::MyFunction() { MELO_INFO("bla bla"); }` prints `[Info] [Timestamp] [MyClass::MyFunction] bla bla`. To enable this feature, provide the `-DMELO_FUNCTION_PRINTS` flag to catkin (or cmake).
+This library can also prepend the class and function name of the log function callers, e.g. `void MyClass::MyFunction() { MELO_INFO("bla bla"); }` prints `[Info] [Timestamp] [MyClass::MyFunction] bla bla`.
+You can enable this feature by defining `MELO_FUNCTION_PRINTS` in the `CMakeLists.txt` of your package:
 
-Note that when using the ROS backend, you can use its [built in functionality](http://wiki.ros.org/rosconsole#Console_Output_Formatting) to print more information.
+```
+add_definitions(-DMELO_FUNCTION_PRINTS)
+```
+
+Note that when using the ROS backend, it is better to use its [built in functionality](http://wiki.ros.org/rosconsole#Console_Output_Formatting) to print more information.

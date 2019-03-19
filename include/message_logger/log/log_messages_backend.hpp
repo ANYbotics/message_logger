@@ -45,9 +45,19 @@
 
 #ifdef MELO_USE_COUT
 #include "message_logger/log/log_messages_std.hpp"
-#else
+#ifndef MELO_MIN_SEVERITY
+#ifndef NDEBUG // Debug mode
+#define MELO_MIN_SEVERITY MELO_SEVERITY_DEBUG // std::cout/Debug: Default is to use keep all logs.
+#else // Release mode
+#define MELO_MIN_SEVERITY MELO_SEVERITY_INFO // std::cout/Release: Default is to remove debug logs.
+#endif // NDEBUG
+#endif // MELO_MIN_SEVERITY
+#else // MELO_USE_COUT
 #include "message_logger/log/log_messages_ros.hpp"
-#endif
+#ifndef MELO_MIN_SEVERITY
+#define MELO_MIN_SEVERITY MELO_SEVERITY_DEBUG // ROS: Default is to use keep all logs.
+#endif // MELO_MIN_SEVERITY
+#endif // MELO_USE_COUT
 
 // todo: replace with std as soon as gcc 4.9.x is standard in ubuntu repo
 #include <boost/regex.hpp>
