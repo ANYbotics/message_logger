@@ -60,7 +60,7 @@
  *
 */
 /*!
-* @file     assert_macros.hpp
+* @file     preprocessor_defines.hpp
 * @author   Christian Gehring
 * @date     Dec, 2014
 * @brief
@@ -76,6 +76,13 @@
 
 #include "message_logger/common/source_file_pos.hpp"
 
+//! Macros for setting the severity level during compilation.
+#define MELO_SEVERITY_DEBUG 0 // Keep all logs.
+#define MELO_SEVERITY_INFO  1 // Remove debug logs.
+#define MELO_SEVERITY_WARN  2 // Remove debug and info logs.
+#define MELO_SEVERITY_ERROR 3 // Keep only error and fatal logs.
+#define MELO_SEVERITY_FATAL 4 // Keep only fatal logs.
+#define MELO_SEVERITY_NONE  5 // Remove all logs.
 
 //! Macro for defining an exception with a given parent
 //  (std::runtime_error should be top parent)
