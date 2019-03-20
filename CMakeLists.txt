@@ -11,15 +11,15 @@ if(DEFINED ENV{ROS_DISTRO} AND NOT DEFINED MELO_USE_COUT)
     INCLUDE_DIRS include
     LIBRARIES ${PROJECT_NAME}
     CATKIN_DEPENDS roscpp
-    CFG_EXTRAS message_logger.cmake 
+    CFG_EXTRAS message_logger.cmake
   )
 else()
   message(STATUS "Building message_logger using std::cout.")
   catkin_package(
     INCLUDE_DIRS include
     LIBRARIES ${PROJECT_NAME}
-    CATKIN_DEPENDS 
-    CFG_EXTRAS message_logger.cmake 
+    CATKIN_DEPENDS
+    CFG_EXTRAS message_logger.cmake
   )
   add_definitions(-DMELO_USE_COUT)
 endif()
@@ -30,14 +30,19 @@ endif()
 
 add_definitions(-std=c++11 -fPIC -Wall -Werror)
 
+configure_file(
+  include/message_logger/log/log_messages_backend.hpp.in
+  ${CMAKE_CURRENT_SOURCE_DIR}/include/message_logger/log/log_messages_backend.hpp @ONLY
+)
+
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
 )
 
-add_library(${PROJECT_NAME} SHARED 
-  src/time/Time.cpp  
-  src/time/TimeStd.cpp  
+add_library(${PROJECT_NAME} SHARED
+  src/time/Time.cpp
+  src/time/TimeStd.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES})
