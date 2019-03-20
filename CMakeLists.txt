@@ -9,10 +9,17 @@ include(CMakeDependentOption)
 cmake_dependent_option(MELO_USE_COUT "Use std::cout" OFF
                        "DEFINED ENV{ROS_DISTRO}" ON)
 
+# Configure header file before catkin_package
+catkin_destinations()
+configure_file(
+  include/message_logger/log/log_messages_backend_config.hpp.in
+  ${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_INCLUDE_DESTINATION}/log/log_messages_backend_config.hpp @ONLY
+)
+
 if(NOT MELO_USE_COUT)
   message(STATUS "Building message_logger using ros.")
   catkin_package(
-    INCLUDE_DIRS include
+    INCLUDE_DIRS include ${CATKIN_DEVEL_PREFIX}/${CATKIN_GLOBAL_INCLUDE_DESTINATION}
     LIBRARIES ${PROJECT_NAME}
     CATKIN_DEPENDS roscpp
     CFG_EXTRAS message_logger.cmake
@@ -20,7 +27,7 @@ if(NOT MELO_USE_COUT)
 else()
   message(STATUS "Building message_logger using std::cout.")
   catkin_package(
-    INCLUDE_DIRS include
+    INCLUDE_DIRS include ${CATKIN_DEVEL_PREFIX}/${CATKIN_GLOBAL_INCLUDE_DESTINATION}
     LIBRARIES ${PROJECT_NAME}
     CATKIN_DEPENDS
     CFG_EXTRAS message_logger.cmake
@@ -33,14 +40,8 @@ endif()
 
 add_definitions(-std=c++11 -fPIC -Wall -Werror)
 
-configure_file(
-  include/message_logger/log/log_messages_backend_config.hpp.in
-  ${PROJECT_BINARY_DIR}/include/message_logger/log/log_messages_backend_config.hpp @ONLY
-)
-
 include_directories(
   include
-  ${PROJECT_BINARY_DIR}/include
   ${catkin_INCLUDE_DIRS}
 )
 
@@ -51,7 +52,7 @@ add_library(${PROJECT_NAME} SHARED
 
 target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES})
 
-install(DIRECTORY include/${PROJECT_NAME}/ ${PROJECT_BINARY_DIR}/include/${PROJECT_NAME}/
+install(DIRECTORY include/${PROJECT_NAME}/ ${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_INCLUDE_DESTINATION}/
   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
   PATTERN "*.in" EXCLUDE
 )
