@@ -43,7 +43,9 @@
 #include "message_logger/common/assert_macros.hpp"
 #include "message_logger/common/colors.hpp"
 
+#ifndef MELO_USE_COUT
 #cmakedefine MELO_USE_COUT
+#endif
 #ifdef MELO_USE_COUT
 #include "message_logger/log/log_messages_std.hpp"
 #else
