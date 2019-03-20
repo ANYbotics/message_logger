@@ -35,11 +35,12 @@ add_definitions(-std=c++11 -fPIC -Wall -Werror)
 
 configure_file(
   include/message_logger/log/log_messages_backend_config.hpp.in
-  ${CMAKE_CURRENT_SOURCE_DIR}/include/message_logger/log/log_messages_backend_config.hpp @ONLY
+  ${PROJECT_BINARY_DIR}/include/message_logger/log/log_messages_backend_config.hpp @ONLY
 )
 
 include_directories(
   include
+  ${PROJECT_BINARY_DIR}/include
   ${catkin_INCLUDE_DIRS}
 )
 
@@ -50,7 +51,7 @@ add_library(${PROJECT_NAME} SHARED
 
 target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES})
 
-install(DIRECTORY include/${PROJECT_NAME}/
+install(DIRECTORY include/${PROJECT_NAME}/ ${PROJECT_BINARY_DIR}/include/${PROJECT_NAME}/
   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
   PATTERN "*.in" EXCLUDE
 )
