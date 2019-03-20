@@ -40,14 +40,7 @@
 */
 #pragma once
 
-// These allow you to compile-out everything below a certain severity level if necessary
-#define MELO_SEVERITY_DEBUG 0 // Keep all logs.
-#define MELO_SEVERITY_INFO  1 // Remove debug logs.
-#define MELO_SEVERITY_WARN  2 // Remove debug and info logs.
-#define MELO_SEVERITY_ERROR 3 // Keep only error and fatal logs.
-#define MELO_SEVERITY_FATAL 4 // Keep only fatal logs.
-#define MELO_SEVERITY_NONE  5 // Remove all logs.
-
+#include "message_logger/common/preprocessor_defines.hpp"
 #include "message_logger/log/log_messages_backend.hpp"
 
 namespace message_logger {
