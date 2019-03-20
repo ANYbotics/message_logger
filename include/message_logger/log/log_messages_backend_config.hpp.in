@@ -33,7 +33,7 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  */
 /*!
-* @file     log_messages_backend.hpp
+* @file     log_messages_backend_config.hpp.in
 * @author   Christian Gehring
 * @date     Dec, 2014
 * @brief
