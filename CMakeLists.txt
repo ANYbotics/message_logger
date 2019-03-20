@@ -5,7 +5,11 @@ project(message_logger)
 # Find Catkin
 find_package(catkin REQUIRED)
 
-if(DEFINED ENV{ROS_DISTRO} AND NOT DEFINED MELO_USE_COUT)
+include(CMakeDependentOption)
+cmake_dependent_option(MELO_USE_COUT "Use std::cout" OFF
+                       "DEFINED ENV{ROS_DISTRO}" ON)
+
+if(NOT MELO_USE_COUT)
   message(STATUS "Building message_logger using ros.")
   catkin_package(
     INCLUDE_DIRS include
@@ -21,7 +25,6 @@ else()
     CATKIN_DEPENDS
     CFG_EXTRAS message_logger.cmake
   )
-  add_definitions(-DMELO_USE_COUT)
 endif()
 
 if(DEFINED MELO_FUNCTION_PRINTS)
