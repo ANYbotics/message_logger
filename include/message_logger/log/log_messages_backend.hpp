@@ -43,14 +43,7 @@
 #include "message_logger/common/assert_macros.hpp"
 #include "message_logger/common/colors.hpp"
 
-#ifndef MELO_USE_COUT
-#cmakedefine MELO_USE_COUT
-#endif
-#ifdef MELO_USE_COUT
-#include "message_logger/log/log_messages_std.hpp"
-#else
-#include "message_logger/log/log_messages_ros.hpp"
-#endif
+#include "message_logger/log/log_messages_backend_config.hpp"
 
 // todo: replace with std as soon as gcc 4.9.x is standard in ubuntu repo
 #include <boost/regex.hpp>

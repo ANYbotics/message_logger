@@ -34,8 +34,8 @@ endif()
 add_definitions(-std=c++11 -fPIC -Wall -Werror)
 
 configure_file(
-  include/message_logger/log/log_messages_backend.hpp.in
-  ${CMAKE_CURRENT_SOURCE_DIR}/include/message_logger/log/log_messages_backend.hpp @ONLY
+  include/message_logger/log/log_messages_backend_config.hpp.in
+  ${CMAKE_CURRENT_SOURCE_DIR}/include/message_logger/log/log_messages_backend_config.hpp @ONLY
 )
 
 include_directories(
