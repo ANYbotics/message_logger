@@ -5,23 +5,33 @@ project(message_logger)
 # Find Catkin
 find_package(catkin REQUIRED)
 
-if(DEFINED ENV{ROS_DISTRO} AND NOT DEFINED MELO_USE_COUT)
+include(CMakeDependentOption)
+cmake_dependent_option(MELO_USE_COUT "Use std::cout" OFF
+                       "DEFINED ENV{ROS_DISTRO}" ON)
+
+# Configure header file before catkin_package
+catkin_destinations()
+configure_file(
+  include/message_logger/log/log_messages_backend_config.hpp.in
+  ${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_INCLUDE_DESTINATION}/log/log_messages_backend_config.hpp @ONLY
+)
+
+if(NOT MELO_USE_COUT)
   message(STATUS "Building message_logger using ros.")
   catkin_package(
-    INCLUDE_DIRS include
+    INCLUDE_DIRS include ${CATKIN_DEVEL_PREFIX}/${CATKIN_GLOBAL_INCLUDE_DESTINATION}
     LIBRARIES ${PROJECT_NAME}
     CATKIN_DEPENDS roscpp
-    CFG_EXTRAS message_logger.cmake 
+    CFG_EXTRAS message_logger.cmake
   )
 else()
   message(STATUS "Building message_logger using std::cout.")
   catkin_package(
-    INCLUDE_DIRS include
+    INCLUDE_DIRS include ${CATKIN_DEVEL_PREFIX}/${CATKIN_GLOBAL_INCLUDE_DESTINATION}
     LIBRARIES ${PROJECT_NAME}
-    CATKIN_DEPENDS 
-    CFG_EXTRAS message_logger.cmake 
+    CATKIN_DEPENDS
+    CFG_EXTRAS message_logger.cmake
   )
-  add_definitions(-DMELO_USE_COUT)
 endif()
 
 if(DEFINED MELO_FUNCTION_PRINTS)
@@ -35,16 +45,16 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_library(${PROJECT_NAME} SHARED 
-  src/time/Time.cpp  
-  src/time/TimeStd.cpp  
+add_library(${PROJECT_NAME} SHARED
+  src/time/Time.cpp
+  src/time/TimeStd.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES})
 
-install(DIRECTORY include/${PROJECT_NAME}/
+install(DIRECTORY include/${PROJECT_NAME}/ ${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_INCLUDE_DESTINATION}/
   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-  PATTERN ".svn" EXCLUDE
+  PATTERN "*.in" EXCLUDE
 )
 install(TARGETS ${PROJECT_NAME}
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
