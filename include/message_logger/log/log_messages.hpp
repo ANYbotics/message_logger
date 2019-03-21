@@ -40,36 +40,69 @@
 */
 #pragma once
 
+#include "message_logger/common/preprocessor_defines.hpp"
 #include "message_logger/log/log_messages_backend.hpp"
 
 namespace message_logger {
 namespace log {
 
+#if (MELO_MIN_SEVERITY) <= (MELO_SEVERITY_FATAL)
 #define MELO_FATAL(...) MELO_LOG(::message_logger::log::levels::Fatal, __VA_ARGS__)
 #define MELO_FATAL_STREAM(message) MELO_LOG_STREAM(::message_logger::log::levels::Fatal, message)
+#else
+#define MELO_FATAL(...)
+#define MELO_FATAL_STREAM(message)
+#endif
 
+#if (MELO_MIN_SEVERITY) <= (MELO_SEVERITY_ERROR)
 #define MELO_ERROR(...) MELO_LOG(::message_logger::log::levels::Error, __VA_ARGS__)
 #define MELO_ERROR_FP(...) MELO_LOG_FP(::message_logger::log::levels::Error, __VA_ARGS__)
 #define MELO_ERROR_STREAM(message) MELO_LOG_STREAM(::message_logger::log::levels::Error, message)
 #define MELO_ERROR_STREAM_FP(message) MELO_LOG_STREAM_FP(::message_logger::log::levels::Error, message)
 #define MELO_ERROR_THROTTLE(rate, ...) MELO_LOG_THROTTLE(rate, ::message_logger::log::levels::Error, __VA_ARGS__)
 #define MELO_ERROR_THROTTLE_STREAM(rate, message) MELO_LOG_THROTTLE_STREAM(rate, ::message_logger::log::levels::Error, message)
+#else
+#define MELO_ERROR(...)
+#define MELO_ERROR_FP(...)
+#define MELO_ERROR_STREAM(message)
+#define MELO_ERROR_STREAM_FP(message)
+#define MELO_ERROR_THROTTLE(rate, ...)
+#define MELO_ERROR_THROTTLE_STREAM(rate, message)
+#endif
 
+#if (MELO_MIN_SEVERITY) <= (MELO_SEVERITY_WARN)
 #define MELO_WARN(...) MELO_LOG(::message_logger::log::levels::Warn, __VA_ARGS__)
 #define MELO_WARN_FP(...) MELO_LOG_FP(::message_logger::log::levels::Warn, __VA_ARGS__)
 #define MELO_WARN_STREAM(message) MELO_LOG_STREAM(::message_logger::log::levels::Warn, message)
 #define MELO_WARN_STREAM_FP(message) MELO_LOG_STREAM_FP(::message_logger::log::levels::Warn, message)
 #define MELO_WARN_THROTTLE(rate, ...) MELO_LOG_THROTTLE(rate, ::message_logger::log::levels::Warn, __VA_ARGS__)
 #define MELO_WARN_THROTTLE_STREAM(rate, message) MELO_LOG_THROTTLE_STREAM(rate, ::message_logger::log::levels::Warn, message)
+#else
+#define MELO_WARN(...)
+#define MELO_WARN_FP(...)
+#define MELO_WARN_STREAM(message)
+#define MELO_WARN_STREAM_FP(message)
+#define MELO_WARN_THROTTLE(rate, ...)
+#define MELO_WARN_THROTTLE_STREAM(rate, message)
+#endif
 
+#if (MELO_MIN_SEVERITY) <= (MELO_SEVERITY_INFO)
 #define MELO_INFO(...) MELO_LOG(::message_logger::log::levels::Info, __VA_ARGS__)
 #define MELO_INFO_FP(...) MELO_LOG_FP(::message_logger::log::levels::Info, __VA_ARGS__)
 #define MELO_INFO_STREAM(message) MELO_LOG_STREAM(::message_logger::log::levels::Info, message)
 #define MELO_INFO_STREAM_FP(message) MELO_LOG_STREAM_FP(::message_logger::log::levels::Info, message)
 #define MELO_INFO_THROTTLE(rate, ...) MELO_LOG_THROTTLE(rate, ::message_logger::log::levels::Info, __VA_ARGS__)
 #define MELO_INFO_THROTTLE_STREAM(rate, message) MELO_LOG_THROTTLE_STREAM(rate, ::message_logger::log::levels::Info, message)
+#else
+#define MELO_INFO(...)
+#define MELO_INFO_FP(...)
+#define MELO_INFO_STREAM(message)
+#define MELO_INFO_STREAM_FP(message)
+#define MELO_INFO_THROTTLE(rate, ...)
+#define MELO_INFO_THROTTLE_STREAM(rate, message)
+#endif
 
-#ifndef NDEBUG
+#if (MELO_MIN_SEVERITY) <= (MELO_SEVERITY_DEBUG)
 #define MELO_DEBUG(...) MELO_LOG(::message_logger::log::levels::Debug, __VA_ARGS__)
 #define MELO_DEBUG_FP(...) MELO_LOG_FP(::message_logger::log::levels::Debug, __VA_ARGS__)
 #define MELO_DEBUG_STREAM(message) MELO_LOG_STREAM(::message_logger::log::levels::Debug, message)

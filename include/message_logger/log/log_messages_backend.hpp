@@ -40,7 +40,7 @@
 */
 #pragma once
 
-#include "message_logger/common/assert_macros.hpp"
+#include "message_logger/common/preprocessor_defines.hpp"
 #include "message_logger/common/colors.hpp"
 
 #include "message_logger/log/log_messages_backend_config.hpp"
