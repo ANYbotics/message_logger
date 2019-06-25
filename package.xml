@@ -5,7 +5,6 @@
   <description>The message logger package</description>
   <maintainer email="cgehring@anybotics.com">Christian Gehring</maintainer>
   <license>BSD</license>
-  <url type="website">http://bitbucket.org/leggedrobotics/message_logger</url>
   <author email="cgehring@anybotics.com">Christian Gehring</author>
   <buildtool_depend>catkin</buildtool_depend>
   <depend>roscpp</depend>
