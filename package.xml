@@ -9,4 +9,6 @@
   <author email="cgehring@anybotics.com">Christian Gehring</author>
   <buildtool_depend>catkin</buildtool_depend>
   <depend>roscpp</depend>
+    <test_depend>gtest</test_depend>
+<!--   <test_depend>cmake_code_coverage</test_depend> -->
 </package>
