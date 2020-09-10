@@ -30,7 +30,6 @@ install_manifest.txt
 build/*
 bin/*
 lib/*
-cmake/FindRoco.cmake
 
 # Generated header file.
 include/message_logger/log/log_messages_backend_config.hpp
