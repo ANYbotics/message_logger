@@ -38,7 +38,7 @@ if(DEFINED MELO_FUNCTION_PRINTS)
   add_definitions(-DMELO_FUNCTION_PRINTS)
 endif()
 
-add_definitions(-std=c++11 -fPIC -Wall -Werror)
+add_definitions(-std=c++11 -fPIC -Wall)
 
 include_directories(
   include
