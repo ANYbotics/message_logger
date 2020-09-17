@@ -4,8 +4,6 @@
 
 This package provides an interface to log text messages. If the library is used on an installed [ROS system](http://www.ros.org), the backend uses the [ROS logging mechanism](http://wiki.ros.org/roscpp/Overview/Logging). Otherwise the messages are forwarded to [std::cout](http://www.cplusplus.com/reference/iostream/cout/).
 
-The software has been tested under ROS Melodic and Ubuntu 18.04.
-
 The source code is released under a [BSD 3-Clause license](LICENSE).
 
 **Author(s):** Christian Gehring
