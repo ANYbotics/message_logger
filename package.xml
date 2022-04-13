@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>message_logger</name>
-  <version>0.2.4</version>
+  <version>0.2.5</version>
   <description>The message logger package</description>
   <maintainer email="pleemann@anybotics.com">Philipp Leemann</maintainer>
   <maintainer email="rdiethelm@anybotics.com">Remo Diethelm</maintainer>
