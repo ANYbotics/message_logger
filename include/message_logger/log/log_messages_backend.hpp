@@ -33,15 +33,15 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  */
 /*!
-* @file     log_messages_backend.hpp
-* @author   Christian Gehring
-* @date     Dec, 2014
-* @brief
-*/
+ * @file     log_messages_backend.hpp
+ * @author   Christian Gehring
+ * @date     Dec, 2014
+ * @brief
+ */
 #pragma once
 
-#include "message_logger/common/preprocessor_defines.hpp"
 #include "message_logger/common/colors.hpp"
+#include "message_logger/common/preprocessor_defines.hpp"
 
 #include "message_logger/log/log_messages_backend_config.hpp"
 
@@ -51,10 +51,8 @@
 namespace message_logger {
 namespace log {
 
-namespace levels
-{
-enum Level
-{
+namespace levels {
+enum Level {
   Debug,
   Info,
   Warn,
@@ -63,7 +61,7 @@ enum Level
 
   Count
 };
-} // namespace levels
+}  // namespace levels
 
 typedef levels::Level Level;
 
@@ -80,58 +78,57 @@ inline const std::string getResetColor() {
 
 inline const std::string getLogColor(const message_logger::log::levels::Level& level) {
   switch (level) {
-  case message_logger::log::levels::Debug:
-    return colorDebug;
-  case message_logger::log::levels::Info:
-    return colorInfo;
-  case message_logger::log::levels::Warn:
-    return colorWarn;
-  case message_logger::log::levels::Error:
-    return colorError;
-  case message_logger::log::levels::Fatal:
-    return colorFatal;
-  default:
-    break;
+    case message_logger::log::levels::Debug:
+      return colorDebug;
+    case message_logger::log::levels::Info:
+      return colorInfo;
+    case message_logger::log::levels::Warn:
+      return colorWarn;
+    case message_logger::log::levels::Error:
+      return colorError;
+    case message_logger::log::levels::Fatal:
+      return colorFatal;
+    default:
+      break;
   }
   return color::def;
 }
 
 inline const std::string getLogLevel(const message_logger::log::levels::Level& level) {
   switch (level) {
-  case message_logger::log::levels::Debug:
-    return std::string{"DEBUG"};
-  case message_logger::log::levels::Info:
-    return std::string{" INFO"};
-  case message_logger::log::levels::Warn:
-    return std::string{" WARN"};
-  case message_logger::log::levels::Error:
-    return std::string{"ERROR"};
-  case message_logger::log::levels::Fatal:
-    return std::string{"FATAL"};
-  default:
-    break;
+    case message_logger::log::levels::Debug:
+      return std::string{"DEBUG"};
+    case message_logger::log::levels::Info:
+      return std::string{" INFO"};
+    case message_logger::log::levels::Warn:
+      return std::string{" WARN"};
+    case message_logger::log::levels::Error:
+      return std::string{"ERROR"};
+    case message_logger::log::levels::Fatal:
+      return std::string{"FATAL"};
+    default:
+      break;
   }
   return std::string{"UNKNOWN"};
 }
 
 #ifdef MELO_FUNCTION_PRINTS
 inline std::string parseMemberName(const std::string& in) {
-    using namespace boost; // todo: replace with std as soon as gcc 4.9.x is standard in ubuntu repo
-    regex re(".*((:{2}|\\s)([a-zA-Z0-9]*)(<.*>)?(:{2})|\\s+)([a-zA-Z0-9]+)\\s*(<.*>)?\\s*\\(.*\\).*");
-    smatch match;
-    if(regex_match(in, match, re)) {
-        return colorFunction + "[" + match.str(3) + match.str(5) + match.str(6) + "] ";
-    }
-    return std::string();
+  using namespace boost;  // todo: replace with std as soon as gcc 4.9.x is standard in ubuntu repo
+  regex re(".*((:{2}|\\s)([a-zA-Z0-9]*)(<.*>)?(:{2})|\\s+)([a-zA-Z0-9]+)\\s*(<.*>)?\\s*\\(.*\\).*");
+  smatch match;
+  if (regex_match(in, match, re)) {
+    return colorFunction + "[" + match.str(3) + match.str(5) + match.str(6) + "] ";
+  }
+  return std::string();
 }
 #else
 inline std::string parseMemberName(const std::string& /*in*/) {
-    return std::string();
+  return std::string();
 }
 #endif
 
 MELO_DEFINE_EXCEPTION(melo_fatal, std::runtime_error)
 
-
-} // namespace log
-} // namespace message_logger
+}  // namespace log
+}  // namespace message_logger

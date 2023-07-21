@@ -24,53 +24,43 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
-*/
+ */
 
 #pragma once
 
-#include <string>
 #include <iostream>
 #include <sstream>
+#include <string>
 // A class and macro that gives you the current file position.
 
 namespace message_logger {
 namespace common {
 namespace internal {
 
-class source_file_pos
-{
+class source_file_pos {
  public:
   std::string function;
   std::string file;
   int line;
 
-  source_file_pos(std::string function, std::string file, int line) :
-    function(function), file(file), line(line) {}
+  source_file_pos(std::string function, std::string file, int line) : function(function), file(file), line(line) {}
 
-  operator std::string()
-  {
-    return toString();
-  }
+  operator std::string() { return toString(); }
 
-  std::string toString() const
-  {
+  std::string toString() const {
     std::stringstream s;
     s << file << ":" << line << ": " << function << "()";
     return s.str();
   }
 };
 
-} // namespace internal
-} // namespace common
-} // namespace message_logger
+}  // namespace internal
+}  // namespace common
+}  // namespace message_logger
 
-inline std::ostream & operator<<(std::ostream & out, const message_logger::common::internal::source_file_pos & sfp)
-{
+inline std::ostream& operator<<(std::ostream& out, const message_logger::common::internal::source_file_pos& sfp) {
   out << sfp.file << ":" << sfp.line << ": " << sfp.function << "()";
   return out;
 }
 
-
-#define MELO_SOURCE_FILE_POS message_logger::common::internal::source_file_pos(__FUNCTION__,__FILE__,__LINE__)
-
-
+#define MELO_SOURCE_FILE_POS message_logger::common::internal::source_file_pos(__FUNCTION__, __FILE__, __LINE__)

@@ -66,11 +66,11 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  *********************************************************************/
 /*!
-* @file     TimeStd.hpp
-* @author   Christian Gehring
-* @date     Dec, 2014
-* @brief
-*/
+ * @file     TimeStd.hpp
+ * @author   Christian Gehring
+ * @date     Dec, 2014
+ * @brief
+ */
 #pragma once
 
 #include <cstdint>
@@ -79,8 +79,7 @@
 namespace message_logger {
 namespace time {
 
-class TimeStd: virtual public Time
-{
+class TimeStd : virtual public Time {
  public:
   TimeStd();
   TimeStd(uint32_t sec, uint32_t nsec);
@@ -98,10 +97,10 @@ class TimeStd: virtual public Time
 
   TimeStd& operator=(const TimeStd& rhs);
   TimeStd operator+(const TimeStd& rhs) const;
-  TimeStd operator-(const TimeStd &rhs) const;
-  TimeStd  operator-() const;
+  TimeStd operator-(const TimeStd& rhs) const;
+  TimeStd operator-() const;
   TimeStd& operator+=(const TimeStd& rhs);
-  TimeStd& operator-=(const TimeStd &rhs);
+  TimeStd& operator-=(const TimeStd& rhs);
 
   TimeStd operator+(double t) const;
   TimeStd& operator+=(double t);
@@ -109,12 +108,13 @@ class TimeStd: virtual public Time
   virtual Time& setNow();
   static TimeStd now();
 
-
   friend std::ostream& operator<<(std::ostream& out, const TimeStd& rhs);
+
  protected:
   inline void normalizeSecNSec(uint64_t& sec, uint64_t& nsec) const;
   inline void normalizeSecNSec(uint32_t& sec, uint32_t& nsec) const;
   inline void normalizeSecNSecUnsigned(int64_t& sec, int64_t& nsec) const;
+
  protected:
   uint32_t sec_;
   uint32_t nsec_;

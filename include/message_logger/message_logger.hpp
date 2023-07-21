@@ -33,11 +33,11 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  */
 /*!
-* @file     message_logger.hpp
-* @author   Christian Gehring, Peter Fankhauser
-* @date     Dec, 2014
-* @brief
-*/
+ * @file     message_logger.hpp
+ * @author   Christian Gehring, Peter Fankhauser
+ * @date     Dec, 2014
+ * @brief
+ */
 #pragma once
 
 #include "message_logger/log/log_messages.hpp"

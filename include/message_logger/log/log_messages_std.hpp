@@ -33,126 +33,122 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  */
 /*!
-* @file     log_messages_std.hpp
-* @author   Christian Gehring
-* @date     Dec, 2014
-* @brief
-*/
+ * @file     log_messages_std.hpp
+ * @author   Christian Gehring
+ * @date     Dec, 2014
+ * @brief
+ */
 #pragma once
-
 
 #include "message_logger/log/log_messages_backend.hpp"
 #include "message_logger/time/TimeStd.hpp"
-
 
 namespace message_logger {
 namespace log {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#define MELO_LOG(level, ...) \
-{ \
-  switch (level) { \
-  case message_logger::log::levels::Fatal: \
-    { \
-      std::stringstream melo_assert_stringstream; \
-      melo_assert_stringstream << message_logger::log::colorFatal << message_logger::common::internal::melo_string_format(__VA_ARGS__) << message_logger::log::getResetColor(); \
-      message_logger::common::internal::melo_throw_exception<message_logger::log::melo_fatal>("[FATAL] ", __FUNCTION__,__FILE__,__LINE__, melo_assert_stringstream.str()); \
-    } \
-    break; \
-  default: \
-    { \
-      std::stringstream melo_stringstream; \
-      melo_stringstream << message_logger::log::getLogColor(level) << "[" << message_logger::log::getLogLevel(level)  << "] " << message_logger::log::parseMemberName(__PRETTY_FUNCTION__) << message_logger::log::getLogColor(level) << message_logger::common::internal::melo_string_format(__VA_ARGS__) << message_logger::log::getResetColor(); \
-      std::cout << melo_stringstream.str() << std::endl; \
-    } \
-    break; \
-  } \
-}
+#define MELO_LOG(level, ...)                                                                                                               \
+  {                                                                                                                                        \
+    switch (level) {                                                                                                                       \
+      case message_logger::log::levels::Fatal: {                                                                                           \
+        std::stringstream melo_assert_stringstream;                                                                                        \
+        melo_assert_stringstream << message_logger::log::colorFatal << message_logger::common::internal::melo_string_format(__VA_ARGS__)   \
+                                 << message_logger::log::getResetColor();                                                                  \
+        message_logger::common::internal::melo_throw_exception<message_logger::log::melo_fatal>("[FATAL] ", __FUNCTION__, __FILE__,        \
+                                                                                                __LINE__, melo_assert_stringstream.str()); \
+      } break;                                                                                                                             \
+      default: {                                                                                                                           \
+        std::stringstream melo_stringstream;                                                                                               \
+        melo_stringstream << message_logger::log::getLogColor(level) << "[" << message_logger::log::getLogLevel(level) << "] "             \
+                          << message_logger::log::parseMemberName(__PRETTY_FUNCTION__) << message_logger::log::getLogColor(level)          \
+                          << message_logger::common::internal::melo_string_format(__VA_ARGS__) << message_logger::log::getResetColor();    \
+        std::cout << melo_stringstream.str() << std::endl;                                                                                 \
+      } break;                                                                                                                             \
+    }                                                                                                                                      \
+  }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#define MELO_LOG_STREAM(level, message) \
-    { \
-      switch (level) { \
-      case message_logger::log::levels::Fatal: \
-        { \
-          std::stringstream melo_assert_stringstream;             \
-          melo_assert_stringstream << message_logger::log::colorFatal << message << message_logger::log::getResetColor(); \
-          message_logger::common::internal::melo_throw_exception<message_logger::log::melo_fatal>("[FATAL] ", __FUNCTION__,__FILE__,__LINE__, melo_assert_stringstream.str()); \
-        } \
-        break; \
-      default: \
-        { \
-          std::stringstream melo_stringstream; \
-          melo_stringstream << message_logger::log::getLogColor(level) << "[" << message_logger::log::getLogLevel(level)  << "] " << message_logger::log::parseMemberName(__PRETTY_FUNCTION__) << message_logger::log::getLogColor(level) << message << message_logger::log::getResetColor(); \
-          std::cout << melo_stringstream.str() << std::endl; \
-        } \
-        break; \
-      } \
-}
+#define MELO_LOG_STREAM(level, message)                                                                                                    \
+  {                                                                                                                                        \
+    switch (level) {                                                                                                                       \
+      case message_logger::log::levels::Fatal: {                                                                                           \
+        std::stringstream melo_assert_stringstream;                                                                                        \
+        melo_assert_stringstream << message_logger::log::colorFatal << message << message_logger::log::getResetColor();                    \
+        message_logger::common::internal::melo_throw_exception<message_logger::log::melo_fatal>("[FATAL] ", __FUNCTION__, __FILE__,        \
+                                                                                                __LINE__, melo_assert_stringstream.str()); \
+      } break;                                                                                                                             \
+      default: {                                                                                                                           \
+        std::stringstream melo_stringstream;                                                                                               \
+        melo_stringstream << message_logger::log::getLogColor(level) << "[" << message_logger::log::getLogLevel(level) << "] "             \
+                          << message_logger::log::parseMemberName(__PRETTY_FUNCTION__) << message_logger::log::getLogColor(level)          \
+                          << message << message_logger::log::getResetColor();                                                              \
+        std::cout << melo_stringstream.str() << std::endl;                                                                                 \
+      } break;                                                                                                                             \
+    }                                                                                                                                      \
+  }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#define MELO_LOG_FP(level, ...) \
-    { \
-      std::stringstream melo_stringstream; \
-      message_logger::common::internal::source_file_pos sfp(__FUNCTION__,__FILE__,__LINE__); \
-      melo_stringstream << message_logger::log::getLogColor(level) << "[" << message_logger::log::getLogLevel(level)  << "] " <<  sfp.toString() << " " << message_logger::common::internal::melo_string_format(__VA_ARGS__) << message_logger::log::getResetColor(); \
-      std::cout << melo_stringstream.str() << std::endl; \
-    }
+#define MELO_LOG_FP(level, ...)                                                                                            \
+  {                                                                                                                        \
+    std::stringstream melo_stringstream;                                                                                   \
+    message_logger::common::internal::source_file_pos sfp(__FUNCTION__, __FILE__, __LINE__);                               \
+    melo_stringstream << message_logger::log::getLogColor(level) << "[" << message_logger::log::getLogLevel(level) << "] " \
+                      << sfp.toString() << " " << message_logger::common::internal::melo_string_format(__VA_ARGS__)        \
+                      << message_logger::log::getResetColor();                                                             \
+    std::cout << melo_stringstream.str() << std::endl;                                                                     \
+  }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#define MELO_LOG_STREAM_FP(level, message) \
-    { \
-      std::stringstream melo_stringstream; \
-      message_logger::common::internal::source_file_pos sfp(__FUNCTION__,__FILE__,__LINE__); \
-      melo_stringstream << message_logger::log::getLogColor(level) << "[" << message_logger::log::getLogLevel(level)  << "] " <<  sfp.toString() << " " << message << message_logger::log::getResetColor(); \
-      std::cout << melo_stringstream.str() << std::endl; \
-    }
+#define MELO_LOG_STREAM_FP(level, message)                                                                                 \
+  {                                                                                                                        \
+    std::stringstream melo_stringstream;                                                                                   \
+    message_logger::common::internal::source_file_pos sfp(__FUNCTION__, __FILE__, __LINE__);                               \
+    melo_stringstream << message_logger::log::getLogColor(level) << "[" << message_logger::log::getLogLevel(level) << "] " \
+                      << sfp.toString() << " " << message << message_logger::log::getResetColor();                         \
+    std::cout << melo_stringstream.str() << std::endl;                                                                     \
+  }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#define MELO_LOG_ONCE(level, ...) \
-    { \
-      static bool once_hit = false; \
-      if (!once_hit) \
-      { \
-        once_hit = true; \
-        MELO_LOG(level, __VA_ARGS__) \
-      } \
-    }
+#define MELO_LOG_ONCE(level, ...)  \
+  {                                \
+    static bool once_hit = false;  \
+    if (!once_hit) {               \
+      once_hit = true;             \
+      MELO_LOG(level, __VA_ARGS__) \
+    }                              \
+  }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #define MELO_LOG_STREAM_ONCE(level, message) \
-  { \
-    static bool once_hit = false; \
-    if (!once_hit) \
-    { \
-      once_hit = true; \
-      MELO_LOG_STREAM(level, message) \
-    } \
-}
+  {                                          \
+    static bool once_hit = false;            \
+    if (!once_hit) {                         \
+      once_hit = true;                       \
+      MELO_LOG_STREAM(level, message)        \
+    }                                        \
+  }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#define MELO_LOG_THROTTLE(rate, level, ...) \
-    { \
-      static double last_hit = 0.0; \
-      ::message_logger::time::TimeStd now = ::message_logger::time::TimeStd::now(); \
-      if (last_hit + rate <= now.toSec()) \
-      { \
-        last_hit = now.toSec(); \
-        MELO_LOG(level, __VA_ARGS__) \
-      } \
-    }
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#define MELO_LOG_THROTTLE_STREAM(rate, level, message) \
-  { \
-    static double last_hit = 0.0; \
+#define MELO_LOG_THROTTLE(rate, level, ...)                                       \
+  {                                                                               \
+    static double last_hit = 0.0;                                                 \
     ::message_logger::time::TimeStd now = ::message_logger::time::TimeStd::now(); \
-    if (last_hit + rate <= now.toSec()) \
-    { \
-      last_hit = now.toSec(); \
-      MELO_LOG_STREAM(level, message) \
-    } \
-}
+    if (last_hit + rate <= now.toSec()) {                                         \
+      last_hit = now.toSec();                                                     \
+      MELO_LOG(level, __VA_ARGS__)                                                \
+    }                                                                             \
+  }
 
-} // namespace log
-} // namespace message_logger
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#define MELO_LOG_THROTTLE_STREAM(rate, level, message)                            \
+  {                                                                               \
+    static double last_hit = 0.0;                                                 \
+    ::message_logger::time::TimeStd now = ::message_logger::time::TimeStd::now(); \
+    if (last_hit + rate <= now.toSec()) {                                         \
+      last_hit = now.toSec();                                                     \
+      MELO_LOG_STREAM(level, message)                                             \
+    }                                                                             \
+  }
+
+}  // namespace log
+}  // namespace message_logger

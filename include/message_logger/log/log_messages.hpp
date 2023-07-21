@@ -33,11 +33,11 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  */
 /*!
-* @file     log_messages.hpp
-* @author   Christian Gehring, Peter Fankhauser
-* @date     Dec, 2014
-* @brief
-*/
+ * @file     log_messages.hpp
+ * @author   Christian Gehring, Peter Fankhauser
+ * @date     Dec, 2014
+ * @brief
+ */
 #pragma once
 
 #include "message_logger/common/preprocessor_defines.hpp"
@@ -134,5 +134,5 @@ namespace log {
 #define MELO_DEBUG_THROTTLE_STREAM(rate, ...)
 #endif
 
-} // namespace log
-} // namespace message_logger
+}  // namespace log
+}  // namespace message_logger

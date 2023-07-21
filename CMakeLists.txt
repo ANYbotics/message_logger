@@ -40,17 +40,22 @@ endif()
 
 add_definitions(-std=c++11 -fPIC -Wall)
 
-include_directories(
-  include
-  ${catkin_INCLUDE_DIRS}
-)
-
 add_library(${PROJECT_NAME} SHARED
   src/time/Time.cpp
   src/time/TimeStd.cpp
 )
-
-target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES})
+add_dependencies(${PROJECT_NAME}
+  ${catkin_EXPORTED_TARGETS}
+)
+target_include_directories(${PROJECT_NAME} PRIVATE
+  include
+)
+target_include_directories(${PROJECT_NAME} SYSTEM PUBLIC
+  ${catkin_INCLUDE_DIRS}
+)
+target_link_libraries(${PROJECT_NAME}
+  ${catkin_LIBRARIES}
+)
 
 install(DIRECTORY include/${PROJECT_NAME}/ ${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_INCLUDE_DESTINATION}/
   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
@@ -62,24 +67,33 @@ install(TARGETS ${PROJECT_NAME}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
-##########
-## Test ##
-##########
 if(CATKIN_ENABLE_TESTING)
   catkin_add_gtest(test_${PROJECT_NAME}
     test/EmptyTests.cpp
     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/test
   )
+  add_dependencies(test_${PROJECT_NAME}
+    ${PROJECT_NAME}
+  )
+  target_include_directories(test_${PROJECT_NAME} PRIVATE
+    include
+  )
+  target_include_directories(test_${PROJECT_NAME} SYSTEM PUBLIC
+    ${catkin_INCLUDE_DIRS}
+  )
+  target_link_libraries(test_${PROJECT_NAME}
+    ${PROJECT_NAME}
+    ${catkin_LIBRARIES}
+    gtest_main
+  )
 
-  if(TARGET test_${PROJECT_NAME})
-    target_link_libraries( test_${PROJECT_NAME}
-      ${PROJECT_NAME}
-      ${catkin_LIBRARIES}
-      gtest_main
-    )
-    find_package(cmake_code_coverage QUIET)
-    if(cmake_code_coverage_FOUND)
-      add_gtest_coverage()
-    endif(cmake_code_coverage_FOUND)
-  endif()
+  find_package(cmake_code_coverage QUIET)
+  if(cmake_code_coverage_FOUND)
+    add_gtest_coverage()
+  endif(cmake_code_coverage_FOUND)
 endif()
+
+find_package(cmake_clang_tools QUIET)
+if(cmake_clang_tools_FOUND)
+  add_default_clang_tooling()
+endif(cmake_clang_tools_FOUND)

@@ -33,11 +33,11 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  */
 /*!
-* @file     Time.cpp
-* @author   Christian Gehring
-* @date     Dec, 2014
-* @brief
-*/
+ * @file     Time.cpp
+ * @author   Christian Gehring
+ * @date     Dec, 2014
+ * @brief
+ */
 
 #include "message_logger/time/Time.hpp"
 
@@ -49,5 +49,5 @@ std::ostream& operator<<(std::ostream& out, const Time& rhs) {
   return out;
 }
 
-} // namespace time
-} // namespace message_logger
+}  // namespace time
+}  // namespace message_logger
