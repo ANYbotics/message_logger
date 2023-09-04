@@ -16,7 +16,9 @@
 
 <!--   <build_depend>cmake_clang_tools</build_depend> -->
 
+<!--   <depend>anymal_sentry_native</depend> -->
   <depend>roscpp</depend>
+<!--   <depend>sentry_native</depend> -->
 
 <!--   <test_depend>cmake_code_coverage</test_depend> -->
   <test_depend>gtest</test_depend>

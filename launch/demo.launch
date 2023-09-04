@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<launch>
+
+  <param name="/config/feature_toggles/error_reporting" value="automatic_full"/>
+
+  <node pkg="message_logger" type="demo" name="demo" output="screen"/>
+
+</launch>
