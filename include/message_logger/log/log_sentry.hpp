@@ -5,6 +5,7 @@
 #ifdef MELO_USE_SENTRY
 #include <sentry.h>
 #include <anymal_sentry_native/SentryGuard.hpp>
+#include <anymal_sentry_native/init.hpp>
 #include <anymal_sentry_native/package_metadata.hpp>
 #endif
 
@@ -24,11 +25,13 @@ void logMessageToSentry(const std::string& message, sentry_level_t level);
 
 }  // namespace message_logger
 
-#define MELO_SENTRY_LOG(level, ...)                                                                    \
-  {                                                                                                    \
-    ::anymal_sentry_native::ensureSentryGuardExists(PACKAGE_NAME, PACKAGE_VERSION);                    \
-    const std::string messageStr{::message_logger::common::internal::melo_string_format(__VA_ARGS__)}; \
-    ::message_logger::logMessageToSentry(messageStr, (level));                                         \
+#define MELO_SENTRY_LOG(level, ...)                                                                      \
+  {                                                                                                      \
+    ::anymal_sentry_native::ensureSentryGuardExists(PACKAGE_NAME, PACKAGE_VERSION);                      \
+    if (::anymal_sentry_native::isInit()) {                                                              \
+      const std::string messageStr{::message_logger::common::internal::melo_string_format(__VA_ARGS__)}; \
+      ::message_logger::logMessageToSentry(messageStr, (level));                                         \
+    }                                                                                                    \
   }
 #define MELO_SENTRY_LOG_ONCE(level, ...)  \
   {                                       \
