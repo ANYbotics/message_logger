@@ -31,7 +31,9 @@ void logMessageToSentry(const std::string& message, const sentry_level_t level) 
     sentry_value_t event{sentry_value_new_message_event(level, "message_logger", enhancedMessage.c_str())};
     sentry_value_set_stacktrace(event, nullptr, 0);
     sentry_capture_event(event);
-  } else {
+  }
+  // Add errors/fatals also a breadcrumbs for future errors/fatals.
+  if (::anymal_sentry_native::getCachedMinBreadcrumbLevel() <= level) {
     sentry_value_t crumb{sentry_value_new_breadcrumb("default", enhancedMessage.c_str())};
     sentry_value_set_by_key(crumb, "level", sentry_value_new_string(convertLevelToString(level).c_str()));
     // To make it obvious in the UI we set the category to "breadcrumb".

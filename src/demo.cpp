@@ -13,14 +13,14 @@ int main(int argc, char** argv) {
   ros::init(argc, argv, "demo");
   ros::start();
 #endif
-  MELO_INFO("info %i", 1)
-  MELO_INFO_STREAM("info stream " << std::to_string(2))
-  MELO_INFO_FP("info fp %i", 3)
-  MELO_INFO_STREAM_FP("info fp " << std::to_string(4))
-  MELO_INFO_ONCE("info once %i", 5)
-  MELO_INFO_STREAM_ONCE("info stream once " << std::to_string(6))
-  MELO_INFO_THROTTLE(1.0, "info throttle %i", 7)
-  MELO_INFO_THROTTLE_STREAM(1.0, "info throttle stream " << std::to_string(8))
+  MELO_DEBUG("debug %i", 1)
+  MELO_DEBUG_STREAM("debug stream " << std::to_string(2))
+  MELO_INFO_FP("info fp %i", 1)
+  MELO_INFO_STREAM_FP("info fp " << std::to_string(2))
+  MELO_INFO_ONCE("info once %i", 3)
+  MELO_INFO_STREAM_ONCE("info stream once " << std::to_string(4))
+  MELO_WARN_THROTTLE(1.0, "warn throttle %i", 1)
+  MELO_WARN_THROTTLE_STREAM(1.0, "warn throttle stream " << std::to_string(2))
   // If enabled, an error or fatal message will be sent to Sentry.
   MELO_ERROR("error")
 #ifndef MELO_USE_COUT
