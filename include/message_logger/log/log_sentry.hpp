@@ -25,29 +25,28 @@ void logMessageToSentry(const std::string& message, sentry_level_t level);
 
 }  // namespace message_logger
 
-#define MELO_SENTRY_LOG(level, ...)                                                                      \
-  {                                                                                                      \
-    ::anymal_sentry_native::ensureSentryGuardExists(PACKAGE_NAME, PACKAGE_VERSION);                      \
-    if (::anymal_sentry_native::isInit()) {                                                              \
-      const std::string messageStr{::message_logger::common::internal::melo_string_format(__VA_ARGS__)}; \
-      ::message_logger::logMessageToSentry(messageStr, (level));                                         \
-    }                                                                                                    \
+#define MELO_SENTRY_LOG(level, message)                                             \
+  {                                                                                 \
+    ::anymal_sentry_native::ensureSentryGuardExists(PACKAGE_NAME, PACKAGE_VERSION); \
+    if (::anymal_sentry_native::isInit()) {                                         \
+      ::message_logger::logMessageToSentry((message), (level));                     \
+    }                                                                               \
   }
-#define MELO_SENTRY_LOG_ONCE(level, ...)  \
-  {                                       \
-    static bool isLogged{false};          \
-    if (!isLogged) {                      \
-      isLogged = true;                    \
-      MELO_SENTRY_LOG(level, __VA_ARGS__) \
-    }                                     \
+#define MELO_SENTRY_LOG_ONCE(level, message) \
+  {                                          \
+    static bool isLogged{false};             \
+    if (!isLogged) {                         \
+      isLogged = true;                       \
+      MELO_SENTRY_LOG(level, message)        \
+    }                                        \
   }
-#define MELO_SENTRY_LOG_THROTTLE(rate, level, ...)                               \
+#define MELO_SENTRY_LOG_THROTTLE(rate, level, message)                           \
   {                                                                              \
     static double lastLogged{0.0};                                               \
     ::message_logger::time::TimeStd now{::message_logger::time::TimeStd::now()}; \
     if (lastLogged + (rate) <= now.toSec()) {                                    \
       lastLogged = now.toSec();                                                  \
-      MELO_SENTRY_LOG(level, __VA_ARGS__)                                        \
+      MELO_SENTRY_LOG(level, message)                                            \
     }                                                                            \
   }
 
