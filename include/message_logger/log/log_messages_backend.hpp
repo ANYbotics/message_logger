@@ -72,11 +72,11 @@ const std::string colorFatal = color::red;
 const std::string colorError = color::red;
 const std::string colorFunction = color::cyan;
 
-inline const std::string getResetColor() {
+inline std::string getResetColor() {
   return color::def;
 }
 
-inline const std::string getLogColor(const message_logger::log::levels::Level& level) {
+inline std::string getLogColor(const message_logger::log::levels::Level& level) {
   switch (level) {
     case message_logger::log::levels::Debug:
       return colorDebug;
@@ -94,7 +94,7 @@ inline const std::string getLogColor(const message_logger::log::levels::Level& l
   return color::def;
 }
 
-inline const std::string getLogLevel(const message_logger::log::levels::Level& level) {
+inline std::string getLogLevel(const message_logger::log::levels::Level& level) {
   switch (level) {
     case message_logger::log::levels::Debug:
       return std::string{"DEBUG"};

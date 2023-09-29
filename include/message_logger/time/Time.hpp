@@ -49,8 +49,12 @@ namespace time {
 
 class Time {
  public:
-  Time() {}
-  virtual ~Time() {}
+  Time() = default;
+  virtual ~Time() = default;
+  Time(const Time&) = default;
+  Time(Time&&) noexcept = default;
+  Time& operator=(const Time&) = default;
+  Time& operator=(Time&&) noexcept = default;
   virtual Time& fromSec(double t) = 0;
   virtual Time& fromNSec(uint64_t t) = 0;
   virtual double toSec() const = 0;

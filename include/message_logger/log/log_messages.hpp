@@ -48,8 +48,9 @@ namespace message_logger {
 namespace log {
 
 // Macro inspired by https://stackoverflow.com/a/2433143/2968115.
-// NOLINTNEXTLINE(cppcoreguidelines-pro-type-static-cast-downcast)
-#define _STREAM_TO_STRING(message) static_cast<std::stringstream&>(std::stringstream().seekp(0) << message).str()
+#define _STREAM_TO_STRING(message)                 \
+  /* NOLINTNEXTLINE(bugprone-macro-parentheses) */ \
+  dynamic_cast<std::stringstream&>(std::stringstream().seekp(0) << message).str()
 
 #if (MELO_MIN_SEVERITY) <= (MELO_SEVERITY_FATAL)
 #define MELO_FATAL(...)                                                                                      \

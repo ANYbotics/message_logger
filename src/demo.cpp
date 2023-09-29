@@ -9,6 +9,7 @@
 #ifdef MELO_USE_COUT
 int main(int /*argc*/, char** /*argv*/) {
 #else
+// NOLINTNEXTLINE(bugprone-exception-escape)
 int main(int argc, char** argv) {
   ros::init(argc, argv, "demo");
   ros::start();

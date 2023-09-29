@@ -83,31 +83,72 @@
 namespace message_logger {
 namespace time {
 
+void normalizeSecNSec(uint64_t& sec, uint64_t& nsec) {
+  uint64_t nsec_part = nsec % 1000000000UL;
+  uint64_t sec_part = nsec / 1000000000UL;
+
+  if (sec_part > UINT_MAX) {
+    throw std::runtime_error("Time is out of dual 32-bit range");
+  }
+
+  sec += sec_part;
+  nsec = nsec_part;
+}
+
+void normalizeSecNSec(uint32_t& sec, uint32_t& nsec) {
+  uint64_t sec64 = sec;
+  uint64_t nsec64 = nsec;
+
+  normalizeSecNSec(sec64, nsec64);
+
+  sec = (uint32_t)sec64;
+  nsec = (uint32_t)nsec64;
+}
+
+void normalizeSecNSecUnsigned(int64_t& sec, int64_t& nsec) {
+  int64_t nsec_part = nsec;
+  int64_t sec_part = sec;
+
+  while (nsec_part >= 1000000000L) {
+    nsec_part -= 1000000000L;
+    ++sec_part;
+  }
+  while (nsec_part < 0) {
+    nsec_part += 1000000000L;
+    --sec_part;
+  }
+
+  if (sec_part < 0 || sec_part > INT_MAX) {
+    throw std::runtime_error("Time is out of dual 32-bit range");
+  }
+
+  sec = sec_part;
+  nsec = nsec_part;
+}
+
 TimeStd::TimeStd() : sec_(0), nsec_(0) {}
 TimeStd::TimeStd(uint32_t sec, uint32_t nsec) : sec_(sec), nsec_(nsec) {
   normalizeSecNSec(sec_, nsec_);
 }
 
-TimeStd::TimeStd(uint64_t t) {
-  fromNSec(t);
-}
+TimeStd::TimeStd(uint64_t nsec) : TimeStd(0, nsec) {}
 
-TimeStd::TimeStd(double t) {
-  fromSec(t);
+TimeStd::TimeStd(double sec) {
+  sec_ = (uint32_t)floor(sec);
+  nsec_ = (uint32_t)std::round((sec - sec_) * 1e9);
 }
 
 TimeStd::TimeStd(const Time& time) : TimeStd(time.getSec(), time.getNSec()) {}
 
-TimeStd::~TimeStd() {}
-
 TimeStd& TimeStd::from(uint32_t sec, uint32_t nsec) {
+  sec_ = sec;
+  nsec_ = nsec;
   normalizeSecNSec(sec_, nsec_);
   return *this;
 }
 
 TimeStd& TimeStd::fromSec(double t) {
-  sec_ = (uint32_t)floor(t);
-  nsec_ = (uint32_t)std::round((t - sec_) * 1e9);
+  *this = TimeStd(t);
   return *this;
 }
 
@@ -135,12 +176,6 @@ double TimeStd::toSec() const {
 TimeStd& TimeStd::operator=(const Time& time) {
   sec_ = time.getSec();
   nsec_ = time.getNSec();
-  return *this;
-}
-
-TimeStd& TimeStd::operator=(const TimeStd& rhs) {
-  sec_ = rhs.getSec();
-  nsec_ = rhs.getNSec();
   return *this;
 }
 
@@ -180,45 +215,6 @@ TimeStd TimeStd::operator-(const TimeStd& rhs) const {
 
 TimeStd TimeStd::operator-() const {
   return TimeStd(-sec_, -nsec_);
-}
-
-void TimeStd::normalizeSecNSec(uint64_t& sec, uint64_t& nsec) const {
-  uint64_t nsec_part = nsec % 1000000000UL;
-  uint64_t sec_part = nsec / 1000000000UL;
-
-  if (sec_part > UINT_MAX) throw std::runtime_error("Time is out of dual 32-bit range");
-
-  sec += sec_part;
-  nsec = nsec_part;
-}
-
-void TimeStd::normalizeSecNSec(uint32_t& sec, uint32_t& nsec) const {
-  uint64_t sec64 = sec;
-  uint64_t nsec64 = nsec;
-
-  normalizeSecNSec(sec64, nsec64);
-
-  sec = (uint32_t)sec64;
-  nsec = (uint32_t)nsec64;
-}
-
-void TimeStd::normalizeSecNSecUnsigned(int64_t& sec, int64_t& nsec) const {
-  int64_t nsec_part = nsec;
-  int64_t sec_part = sec;
-
-  while (nsec_part >= 1000000000L) {
-    nsec_part -= 1000000000L;
-    ++sec_part;
-  }
-  while (nsec_part < 0) {
-    nsec_part += 1000000000L;
-    --sec_part;
-  }
-
-  if (sec_part < 0 || sec_part > INT_MAX) throw std::runtime_error("Time is out of dual 32-bit range");
-
-  sec = sec_part;
-  nsec = nsec_part;
 }
 
 Time& TimeStd::setNow() {
