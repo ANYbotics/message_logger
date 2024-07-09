@@ -46,7 +46,12 @@
 #include "message_logger/log/log_messages_backend_config.hpp"
 
 // todo: replace with std as soon as gcc 4.9.x is standard in ubuntu repo
+#ifndef ROS2_BUILD
 #include <boost/regex.hpp>
+#else /* ROS2_BUILD */
+#include <regex>
+#endif /* ROS2_BUILD */
+#include <string>
 
 namespace message_logger {
 namespace log {
@@ -114,10 +119,16 @@ inline std::string getLogLevel(const message_logger::log::levels::Level& level) 
 
 #ifdef MELO_FUNCTION_PRINTS
 inline std::string parseMemberName(const std::string& in) {
+#ifndef ROS2_BUILD
   using namespace boost;  // todo: replace with std as soon as gcc 4.9.x is standard in ubuntu repo
   regex re(".*((:{2}|\\s)([a-zA-Z0-9]*)(<.*>)?(:{2})|\\s+)([a-zA-Z0-9]+)\\s*(<.*>)?\\s*\\(.*\\).*");
   smatch match;
   if (regex_match(in, match, re)) {
+#else  /* ROS2_BUILD */
+  std::regex re(".*((:{2}|\\s)([a-zA-Z0-9]*)(<.*>)?(:{2})|\\s+)([a-zA-Z0-9]+)\\s*(<.*>)?\\s*\\(.*\\).*");
+  std::smatch match;
+  if (std::regex_match(in, match, re)) {
+#endif /* ROS2_BUILD */
     return colorFunction + "[" + match.str(3) + match.str(5) + match.str(6) + "] ";
   }
   return std::string();

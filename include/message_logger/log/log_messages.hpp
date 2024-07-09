@@ -220,8 +220,11 @@ namespace log {
     MELO_SENTRY_LOG(SENTRY_LEVEL_DEBUG, ::message_logger::common::internal::meloStringFormat(__VA_ARGS__)) \
     MELO_LOG_FP(::message_logger::log::levels::Debug, __VA_ARGS__)                                         \
   }
-#define MELO_DEBUG_STREAM(message) \
-  { MELO_SENTRY_LOG(SENTRY_LEVEL_DEBUG, _STREAM_TO_STRING(message)) MELO_LOG_STREAM(::message_logger::log::levels::Debug, message) }
+#define MELO_DEBUG_STREAM(message)                                  \
+  {                                                                 \
+    MELO_SENTRY_LOG(SENTRY_LEVEL_DEBUG, _STREAM_TO_STRING(message)) \
+    MELO_LOG_STREAM(::message_logger::log::levels::Debug, message)  \
+  }
 #define MELO_DEBUG_STREAM_FP(message)                                 \
   {                                                                   \
     MELO_SENTRY_LOG(SENTRY_LEVEL_DEBUG, _STREAM_TO_STRING(message))   \

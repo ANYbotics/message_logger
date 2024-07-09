@@ -1,3 +1,8 @@
+# Ensure compatibility with CMake 3.28+ by setting policy CMP0127 to NEW
+if(POLICY CMP0127)
+  cmake_policy(SET CMP0127 NEW)
+endif()
+
 # Option to use std::cout instead of ros.
 include(CMakeDependentOption)
 cmake_dependent_option(MELO_USE_COUT "Use std::cout" OFF "DEFINED ENV{ROS_DISTRO}" ON)
