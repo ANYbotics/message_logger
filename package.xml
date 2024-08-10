@@ -2,7 +2,7 @@
 <package format="3">
 
   <name>message_logger</name>
-  <version>0.2.21</version>
+  <version>0.2.22</version>
   <description>The message logger package</description>
 
   <author email="cgehring@anybotics.com">Christian Gehring</author>
@@ -15,12 +15,12 @@
 
 <!--   <build_depend>cmake_clang_tools</build_depend> -->
 
-  <depend condition="$ROS_VERSION == 1">anymal_sentry_native</depend>
-  <depend condition="$ROS_VERSION == 1">sentry_native</depend>
+<!--   <depend condition="$ROS_VERSION == 1">anymal_sentry_native</depend> -->
+<!--   <depend condition="$ROS_VERSION == 1">sentry_native</depend> -->
   <depend condition="$ROS_VERSION == 1">roscpp</depend>
   <depend condition="$ROS_VERSION == 2">rclcpp</depend>
 
-  <test_depend condition="$ROS_VERSION == 1">cmake_code_coverage</test_depend>
+<!--   <test_depend condition="$ROS_VERSION == 1">cmake_code_coverage</test_depend> -->
   <test_depend>gtest</test_depend>
   <export>
     <build_type condition="$ROS_VERSION == 2">ament_cmake</build_type>
