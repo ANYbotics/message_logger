@@ -2,7 +2,7 @@
 <package format="3">
 
   <name>message_logger</name>
-  <version>0.2.22</version>
+  <version>0.2.23</version>
   <description>The message logger package</description>
 
   <author email="cgehring@anybotics.com">Christian Gehring</author>
