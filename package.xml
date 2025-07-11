@@ -13,7 +13,7 @@
   <buildtool_depend condition="$ROS_VERSION == 1">catkin</buildtool_depend>
   <buildtool_depend condition="$ROS_VERSION == 2">ament_cmake</buildtool_depend>
 
-<!--   <build_depend>cmake_clang_tools</build_depend> -->
+<!--   <build_depend condition="$ROS_VERSION == 1">cmake_clang_tools</build_depend> -->
 
 <!--   <depend condition="$ROS_VERSION == 1">anymal_sentry_native</depend> -->
 <!--   <depend condition="$ROS_VERSION == 1">sentry_native</depend> -->
