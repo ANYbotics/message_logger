@@ -214,8 +214,15 @@ class LoggerClockManager {
   }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * @brief Log a message with throttling (rate limiting)
+ * @param rate Throttle rate in seconds (e.g., 1.0 for once per second, 0.5 for twice per second)
+ * @param level Log level (Debug, Info, Warn, Error, Fatal)
+ * @param ... Variable arguments for message formatting
+ */
 #define MELO_LOG_THROTTLE(rate, level, ...)                                                                                              \
   {                                                                                                                                      \
+    uint32_t rate_ms = static_cast<uint32_t>(rate * 1000);                                                                               \
     auto& logger = message_logger::log::LoggerManager::getLogger();                                                                      \
     auto& clock = message_logger::log::LoggerClockManager::getLoggerClock();                                                             \
     std::stringstream melo_stringstream;                                                                                                 \
@@ -223,19 +230,19 @@ class LoggerClockManager {
                       << message_logger::common::internal::meloStringFormat(__VA_ARGS__) << message_logger::log::getResetColor();        \
     switch (level) {                                                                                                                     \
       case message_logger::log::levels::Debug: {                                                                                         \
-        RCLCPP_DEBUG_THROTTLE(logger, clock, rate, "%s", melo_stringstream.str().c_str());                                               \
+        RCLCPP_DEBUG_THROTTLE(logger, clock, rate_ms, "%s", melo_stringstream.str().c_str());                                            \
       } break;                                                                                                                           \
       case message_logger::log::levels::Info: {                                                                                          \
-        RCLCPP_INFO_THROTTLE(logger, clock, rate, "%s", melo_stringstream.str().c_str());                                                \
+        RCLCPP_INFO_THROTTLE(logger, clock, rate_ms, "%s", melo_stringstream.str().c_str());                                             \
       } break;                                                                                                                           \
       case message_logger::log::levels::Warn: {                                                                                          \
-        RCLCPP_WARN_THROTTLE(logger, clock, rate, "%s", melo_stringstream.str().c_str());                                                \
+        RCLCPP_WARN_THROTTLE(logger, clock, rate_ms, "%s", melo_stringstream.str().c_str());                                             \
       } break;                                                                                                                           \
       case message_logger::log::levels::Error: {                                                                                         \
-        RCLCPP_ERROR_THROTTLE(logger, clock, rate, "%s", melo_stringstream.str().c_str());                                               \
+        RCLCPP_ERROR_THROTTLE(logger, clock, rate_ms, "%s", melo_stringstream.str().c_str());                                            \
       } break;                                                                                                                           \
       case message_logger::log::levels::Fatal: {                                                                                         \
-        RCLCPP_FATAL_THROTTLE(logger, clock, rate, "%s", melo_stringstream.str().c_str());                                               \
+        RCLCPP_FATAL_THROTTLE(logger, clock, rate_ms, "%s", melo_stringstream.str().c_str());                                            \
         std::stringstream melo_assert_stringstream;                                                                                      \
         melo_assert_stringstream << message_logger::log::colorFatal << message_logger::common::internal::meloStringFormat(__VA_ARGS__)   \
                                  << message_logger::log::getResetColor();                                                                \
@@ -243,14 +250,21 @@ class LoggerClockManager {
                                                                                               __LINE__, melo_assert_stringstream.str()); \
       } break;                                                                                                                           \
       default: {                                                                                                                         \
-        RCLCPP_INFO_THROTTLE(logger, clock, rate, __VA_ARGS__);                                                                          \
+        RCLCPP_INFO_THROTTLE(logger, clock, rate_ms, __VA_ARGS__);                                                                       \
       } break;                                                                                                                           \
     }                                                                                                                                    \
   }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * @brief Log a stream message with throttling (rate limiting)
+ * @param rate Throttle rate in seconds (e.g., 1.0 for once per second, 0.5 for twice per second)
+ * @param level Log level (Debug, Info, Warn, Error, Fatal)
+ * @param message Message to log
+ */
 #define MELO_LOG_THROTTLE_STREAM(rate, level, message)                                                                                   \
   {                                                                                                                                      \
+    uint32_t rate_ms = static_cast<uint32_t>(rate * 1000);                                                                               \
     auto& logger = message_logger::log::LoggerManager::getLogger();                                                                      \
     auto& clock = message_logger::log::LoggerClockManager::getLoggerClock();                                                             \
     std::stringstream melo_stringstream;                                                                                                 \
@@ -259,19 +273,19 @@ class LoggerClockManager {
                       << message_logger::log::getResetColor();                                                                           \
     switch (level) {                                                                                                                     \
       case message_logger::log::levels::Debug: {                                                                                         \
-        RCLCPP_DEBUG_STREAM_THROTTLE(logger, clock, rate, melo_stringstream.str());                                                      \
+        RCLCPP_DEBUG_STREAM_THROTTLE(logger, clock, rate_ms, melo_stringstream.str());                                                   \
       } break;                                                                                                                           \
       case message_logger::log::levels::Info: {                                                                                          \
-        RCLCPP_INFO_STREAM_THROTTLE(logger, clock, rate, melo_stringstream.str());                                                       \
+        RCLCPP_INFO_STREAM_THROTTLE(logger, clock, rate_ms, melo_stringstream.str());                                                    \
       } break;                                                                                                                           \
       case message_logger::log::levels::Warn: {                                                                                          \
-        RCLCPP_WARN_STREAM_THROTTLE(logger, clock, rate, melo_stringstream.str());                                                       \
+        RCLCPP_WARN_STREAM_THROTTLE(logger, clock, rate_ms, melo_stringstream.str());                                                    \
       } break;                                                                                                                           \
       case message_logger::log::levels::Error: {                                                                                         \
-        RCLCPP_ERROR_STREAM_THROTTLE(logger, clock, rate, melo_stringstream.str());                                                      \
+        RCLCPP_ERROR_STREAM_THROTTLE(logger, clock, rate_ms, melo_stringstream.str());                                                   \
       } break;                                                                                                                           \
       case message_logger::log::levels::Fatal: {                                                                                         \
-        RCLCPP_FATAL_STREAM_THROTTLE(logger, clock, rate, melo_stringstream.str());                                                      \
+        RCLCPP_FATAL_STREAM_THROTTLE(logger, clock, rate_ms, melo_stringstream.str());                                                   \
         std::stringstream melo_assert_stringstream;                                                                                      \
         /* NOLINTNEXTLINE(bugprone-macro-parentheses) */                                                                                 \
         melo_assert_stringstream << message_logger::log::colorFatal << message << message_logger::log::getResetColor();                  \
@@ -279,7 +293,7 @@ class LoggerClockManager {
                                                                                               __LINE__, melo_assert_stringstream.str()); \
       } break;                                                                                                                           \
       default: {                                                                                                                         \
-        RCLCPP_INFO_STREAM_THROTTLE(logger, clock, rate, message);                                                                       \
+        RCLCPP_INFO_STREAM_THROTTLE(logger, clock, rate_ms, message);                                                                    \
       } break;                                                                                                                           \
     }                                                                                                                                    \
   }
