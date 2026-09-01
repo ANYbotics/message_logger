@@ -41,6 +41,9 @@
 
 #pragma once
 
+#include <atomic>
+#include <mutex>
+
 #include <rclcpp/rclcpp.hpp>
 
 #include "message_logger/log/log_messages_backend.hpp"
@@ -48,14 +51,60 @@
 namespace message_logger {
 namespace log {
 
+//! Logger name used until a node claims MELO logging; it names itself in console output.
+constexpr const char* kUnattachedLoggerName{"message_logger"};
+
+/*!
+ * Holds the rclcpp::Logger the MELO_* macros log through.
+ *
+ * rcl publishes a record to /rosout only under a logger name rclcpp::Node registered, so records
+ * logged through the unattached logger reach the console but never /rosout, and so never a bag.
+ * Nodes claim MELO logging with attachToNode().
+ *
+ * Keep the state inline. A function-local static in an inline function is a STB_GNU_UNIQUE
+ * symbol, so every object in the process shares one instance. A static inside the library cannot
+ * unify with the copies already compiled into installed libraries, and the loader then binds
+ * getLogger() and setLogger() to different ones: attachToNode() writes a logger nobody reads.
+ */
 class LoggerManager {
  public:
   static rclcpp::Logger& getLogger() {
-    static rclcpp::Logger logger = rclcpp::get_logger("rclcpp");
+    warnOnceIfUnattached();
+    return loggerStorage();
+  }
+
+  static void setLogger(const rclcpp::Logger& logger) {
+    loggerStorage() = logger;
+    attached().store(true, std::memory_order_relaxed);
+  }
+
+  //! False until a node claims MELO logging; until then records cannot reach /rosout.
+  static bool isAttached() { return attached().load(std::memory_order_relaxed); }
+
+ private:
+  static rclcpp::Logger& loggerStorage() {
+    static rclcpp::Logger logger = rclcpp::get_logger(kUnattachedLoggerName);
     return logger;
   }
 
-  static void setLogger(const rclcpp::Logger& logger) { getLogger() = logger; }
+  static std::atomic<bool>& attached() {
+    static std::atomic<bool> attached{false};
+    return attached;
+  }
+
+  //! Announce the loss once, on the console the lost records go to.
+  static void warnOnceIfUnattached() {
+    if (isAttached()) {
+      return;
+    }
+    static std::once_flag warned;
+    std::call_once(warned, [] {
+      RCLCPP_WARN(loggerStorage(),
+                  "message_logger is not attached to a node: MELO_* records reach the console only "
+                  "and are missing from /rosout and from every recorded bag. Call "
+                  "message_logger::log::attachToNode(node) right after creating the node.");
+    });
+  }
 };
 
 // Clock management
@@ -68,6 +117,20 @@ class LoggerClockManager {
 
   static void setClock(const rclcpp::Clock& clock) { getLoggerClock() = clock; }
 };
+
+/*!
+ * Route the MELO_* macros through `node`: its logger puts records on /rosout under the node's
+ * name, its clock makes MELO_*_THROTTLE follow ROS time under use_sim_time. Call as soon as the
+ * node exists — records emitted before it are lost to /rosout.
+ */
+inline void attachToNode(rclcpp::Node& node) {
+  LoggerManager::setLogger(node.get_logger());
+  LoggerClockManager::setClock(*node.get_clock());
+}
+
+inline void attachToNode(const rclcpp::Node::SharedPtr& node) {
+  attachToNode(*node);
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #define MELO_LOG(level, ...)                                                                                                             \

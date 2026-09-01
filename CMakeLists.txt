@@ -188,6 +188,9 @@ add_library(${PROJECT_NAME} SHARED
 )
 target_include_directories(${PROJECT_NAME} PUBLIC
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
+  # log_messages_backend_config.hpp is generated here and installed alongside the shipped headers,
+  # so consumers in this build tree need the binary include dir the installed ones do not.
+  "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>"
   "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>"
 )
 ament_target_dependencies(${PROJECT_NAME}
@@ -196,14 +199,6 @@ ament_target_dependencies(${PROJECT_NAME}
 
 add_executable(demo
   src/demo.cpp
-)
-target_include_directories(demo PRIVATE
-  "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
-  "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>"
-  "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>"
-)
-ament_target_dependencies(demo
-  ${AMENT_PACKAGE_DEPENDENCIES}
 )
 target_link_libraries(demo
   ${PROJECT_NAME}
@@ -259,6 +254,13 @@ if(BUILD_TESTING)
   find_package(ament_cmake_gtest REQUIRED)
   ament_add_gtest(test_${PROJECT_NAME} test/EmptyTests.cpp
   WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/test)
+
+  # The unattached-logger assertions need a process where nothing has claimed the MELO_* logger
+  # yet, so they cannot share a binary with the attachToNode tests.
+  ament_add_gtest(test_logger_manager test/LoggerManagerTests.cpp)
+  target_link_libraries(test_logger_manager ${PROJECT_NAME})
+  ament_add_gtest(test_unattached_logger test/UnattachedLoggerTests.cpp)
+  target_link_libraries(test_unattached_logger ${PROJECT_NAME})
 
   find_package(cmake_code_coverage QUIET)
   if(cmake_code_coverage_FOUND)
