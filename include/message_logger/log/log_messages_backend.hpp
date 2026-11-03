@@ -43,6 +43,7 @@
 #include "message_logger/common/colors.hpp"
 #include "message_logger/common/preprocessor_defines.hpp"
 
+#include "message_logger/log/levels.hpp"
 #include "message_logger/log/log_messages_backend_config.hpp"
 
 // todo: replace with std as soon as gcc 4.9.x is standard in ubuntu repo
@@ -55,20 +56,6 @@
 
 namespace message_logger {
 namespace log {
-
-namespace levels {
-enum Level {
-  Debug,
-  Info,
-  Warn,
-  Error,
-  Fatal,
-
-  Count
-};
-}  // namespace levels
-
-typedef levels::Level Level;
 
 const std::string colorDebug = color::green;
 const std::string colorInfo = color::def;
@@ -134,6 +121,10 @@ inline std::string parseMemberName(const std::string& in) {
   return std::string();
 }
 #else
+inline std::string parseMemberName(const char* /*in*/) {
+  return std::string();
+}
+
 inline std::string parseMemberName(const std::string& /*in*/) {
   return std::string();
 }

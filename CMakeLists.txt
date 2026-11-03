@@ -261,6 +261,8 @@ if(BUILD_TESTING)
   target_link_libraries(test_logger_manager ${PROJECT_NAME})
   ament_add_gtest(test_unattached_logger test/UnattachedLoggerTests.cpp)
   target_link_libraries(test_unattached_logger ${PROJECT_NAME})
+  ament_add_gtest(test_level_check test/LevelCheckTests.cpp)
+  target_link_libraries(test_level_check ${PROJECT_NAME})
 
   find_package(cmake_code_coverage QUIET)
   if(cmake_code_coverage_FOUND)
