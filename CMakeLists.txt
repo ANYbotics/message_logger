@@ -142,8 +142,9 @@ else() # ROS version 2
 ## Configure ##
 ###############
 
-
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 add_compile_options(-Wall -Wextra -Wpedantic -Werror=return-type)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
@@ -176,7 +177,6 @@ configure_file(include/message_logger/log/log_messages_backend_config.hpp.in
 
 add_definitions(-fPIC)
 
-
 ###########
 ## Build ##
 ###########
@@ -203,7 +203,6 @@ add_executable(demo
 target_link_libraries(demo
   ${PROJECT_NAME}
 )
-
 
 #############
 ## Install ##
@@ -244,7 +243,6 @@ ament_export_libraries(${PROJECT_NAME})
 ament_export_targets(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)
 
 ament_export_dependencies(${AMENT_PACKAGE_DEPENDENCIES})
-
 
 #############
 ## Testing ##
