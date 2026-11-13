@@ -6,8 +6,7 @@
   <description>The message logger package</description>
 
   <author email="cgehring@anybotics.com">Christian Gehring</author>
-  <maintainer email="pleemann@anybotics.com">Philipp Leemann</maintainer>
-  <maintainer email="rdiethelm@anybotics.com">Remo Diethelm</maintainer>
+  <maintainer email="support@anybotics.com">ANYbotics</maintainer>
   <license>BSD</license>
 
   <buildtool_depend condition="$ROS_VERSION == 1">catkin</buildtool_depend>
